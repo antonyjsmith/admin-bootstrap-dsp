@@ -1,11 +1,11 @@
 'use strict';
 
-describe('Controller: MainCtrl', function () {
+describe('Controller: MainController', function () {
 
   // load the controller's module
   beforeEach(module('sbAdminApp'));
 
-  var MainCtrl,
+  var MainController,
     scope;
 
   // Initialize the controller and a mock scope

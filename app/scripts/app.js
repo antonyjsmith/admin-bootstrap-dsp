@@ -13,7 +13,12 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    'ngDreamFactory',
   ])
+  
+  .constant('DSP_URL', 'https://core.maxwelllucas.com')
+  .constant('DSP_API_KEY', 'dfauth')
+  
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
     
     $ocLazyLoadProvider.config({
@@ -76,7 +81,7 @@ angular
     })
       .state('dashboard.home',{
         url:'/home',
-        controller: 'MainCtrl',
+        controller: 'MainController',
         templateUrl:'views/dashboard/home.html',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {

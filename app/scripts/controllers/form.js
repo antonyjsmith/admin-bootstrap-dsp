@@ -1,9 +1,9 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
+ * @name sbAdminApp.controller:MainController
  * @description
- * # MainCtrl
+ * # MainController
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')

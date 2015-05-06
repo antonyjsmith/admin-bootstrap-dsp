@@ -5,7 +5,14 @@
  */
 
 body {
+	margin-top: 100px;
     background-color: #f8f8f8;
+}
+
+@media(min-width:768px) {
+    body {
+        margin-top: 50px;
+    }
 }
 
 #wrapper {
