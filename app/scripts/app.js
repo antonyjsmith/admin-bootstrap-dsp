@@ -17,7 +17,10 @@ angular
   ])
   
   .constant('DSP_URL', 'https://core.maxwelllucas.com')
-  .constant('DSP_API_KEY', 'dfauth')
+  .constant('DSP_API_KEY', 'dfauth')  
+  .config(['$httpProvider', 'DSP_API_KEY', function($httpProvider, DSP_API_KEY) {
+  		$httpProvider.defaults.headers.common['X-DreamFactory-Application-Name'] = DSP_API_KEY;
+	}])
   
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
     
