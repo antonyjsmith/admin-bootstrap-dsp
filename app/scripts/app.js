@@ -14,12 +14,16 @@ angular
     'ui.bootstrap',
     'angular-loading-bar',
     'ngDreamFactory',
+    'ngResource',
+    'services',
+    
   ])
   
   .constant('DSP_URL', 'https://core.maxwelllucas.com')
   .constant('DSP_API_KEY', 'dfauth')
   
-  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',
+  	function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
     
     $ocLazyLoadProvider.config({
       debug:false,
@@ -102,10 +106,6 @@ angular
         templateUrl:'views/form.html',
         url:'/form'
     })
-      .state('dashboard.blank',{
-        templateUrl:'views/pages/blank.html',
-        url:'/blank'
-    })
       .state('login',{
         templateUrl:'views/pages/login.html',
         url:'/login'
@@ -135,8 +135,8 @@ angular
         url:'/table'
     })
       .state('dashboard.panels-wells',{
-          templateUrl:'views/ui-elements/panels-wells.html',
-          url:'/panels-wells'
+        templateUrl:'views/ui-elements/panels-wells.html',
+        url:'/panels-wells'
       })
       .state('dashboard.buttons',{
         templateUrl:'views/ui-elements/buttons.html',
@@ -157,6 +157,10 @@ angular
       .state('dashboard.grid',{
        templateUrl:'views/ui-elements/grid.html',
        url:'/grid'
+   })
+       .state('dashboard.countries',{
+       templateUrl:'views/countries/list.html',
+       url:'/countries'
    })
   }]);
 
