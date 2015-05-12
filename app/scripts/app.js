@@ -20,13 +20,36 @@ angular
     'dfUserManagement',
     'ngDreamFactory',
     'services',
+    'error',
     'userAuthManage'
   ])
   
-  .constant('DSP_URL', 'https://core.maxwelllucas.com')
-  .constant('DSP_API_KEY', 'dfauth')  
-  .config(['$httpProvider', 'DSP_API_KEY', function($httpProvider, DSP_API_KEY) {
-  		$httpProvider.defaults.headers.common['X-DreamFactory-Application-Name'] = DSP_API_KEY;
+	.constant('DSP_URL', 'https://core.maxwelllucas.com')
+	.constant('DSP_API_KEY', 'dfauth')  
+	.config(['$httpProvider', 'DSP_API_KEY', function($httpProvider, DSP_API_KEY) {
+			$httpProvider.defaults.headers.common['X-DreamFactory-Application-Name'] = DSP_API_KEY;
+	}])
+	
+	//Watch for dreamfactory errors and broadcast and exceptions error.js is listening!!
+	
+	.config(['$provide', function($provide) {
+		$provide.decorator('$exceptionHandler', ['$delegate', '$injector', function($delegate, $injector) {
+		    return function(exception) {
+		    
+		    if (exception.provider === 'dreamfactory') {
+	
+	            $injector.invoke(['$rootScope', function($rootScope) {
+	
+	                $rootScope.$broadcast('error:dreamfactory', exception);
+	            }]);
+	            
+			} else {
+		        
+		        return $delegate(exception);
+		        
+		        }
+		    }
+		}])
 	}])
   
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',
