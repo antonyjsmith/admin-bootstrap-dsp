@@ -14,6 +14,17 @@ angular.module('services', ['ngResource'])
 	  		console.log(CountriesTest.query());
 	  				
   	}])
+  	
+  .factory('PasswordServices', ['$resource',
+	function($resource){
+		  
+	return $resource(DSP_URL + '/rest/user/password', {},
+		{
+	    	save : { method: 'POST'}
+	    	
+	    })
+	    
+	}])
   
   
   .factory('CountriesTest', ['$resource', 'DSP_URL',
