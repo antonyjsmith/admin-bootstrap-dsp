@@ -15,8 +15,8 @@ angular.module('services', ['ngResource'])
 	  				
   	}])
   	
-  .factory('PasswordServices', ['$resource',
-	function($resource){
+  .factory('PasswordServices', ['$resource', 'DSP_URL',
+	function($resource, DSP_URL){
 		  
 	return $resource(DSP_URL + '/rest/user/password', {},
 		{
