@@ -9,14 +9,18 @@
  */
 angular
   .module('sbAdminApp', [
+	'ngRoute',
+	'ngResource',
+	'ngSanitize',
+	'ngCookies',
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    'dfUserManagement',
     'ngDreamFactory',
-    'ngResource',
     'services',
-    
+    'userAuthManage'
   ])
   
   .constant('DSP_URL', 'https://core.maxwelllucas.com')
@@ -33,11 +37,35 @@ angular
       events:true,
     });
 
-    $urlRouterProvider.otherwise('/dashboard/home');
+    $urlRouterProvider.otherwise('/login');
 
     $stateProvider
-      .state('dashboard', {
-        url:'/dashboard',
+		.state('login',{
+			url:'/login',
+        	templateUrl:'views/pages/login.html',
+        	controller: 'loginController'
+    	})
+    	
+    	.state('logout',{
+			url:'/logout',
+        	templateUrl:'views/pages/logout.html',
+        	controller: 'logoutController'
+    	})
+    	
+    	.state('register',{
+			url:'/register',
+        	templateUrl:'views/pages/register.html',
+        	controller: 'registerController'
+    	})
+    	
+    	.state('forgot',{
+			url:'/forgot',
+        	templateUrl:'views/pages/forgot.html',
+        	controller: 'passwordController'
+    	})
+    
+      .state('portal', {
+        url:'/portal',
         templateUrl: 'views/dashboard/main.html',
         resolve: {
             loadMyDirectives:function($ocLazyLoad){
@@ -65,29 +93,14 @@ angular
                 })
                 $ocLazyLoad.load(
                 {
-                  name:'ngCookies',
-                  files:['bower_components/angular-cookies/angular-cookies.js']
-                })
-                $ocLazyLoad.load(
-                {
-                  name:'ngResource',
-                  files:['bower_components/angular-resource/angular-resource.js']
-                })
-                $ocLazyLoad.load(
-                {
-                  name:'ngSanitize',
-                  files:['bower_components/angular-sanitize/angular-sanitize.js']
-                })
-                $ocLazyLoad.load(
-                {
                   name:'ngTouch',
                   files:['bower_components/angular-touch/angular-touch.js']
                 })
             }
         }
     })
-      .state('dashboard.home',{
-        url:'/home',
+      .state('portal.dashboard',{
+        url:'/dashboard',
         controller: 'MainController',
         templateUrl:'views/dashboard/home.html',
         resolve: {
@@ -105,15 +118,11 @@ angular
           }
         }
       })
-      .state('dashboard.form',{
+      .state('portal.form',{
         templateUrl:'views/form.html',
         url:'/form'
     })
-      .state('login',{
-        templateUrl:'views/pages/login.html',
-        url:'/login'
-    })
-      .state('dashboard.chart',{
+      .state('portal.chart',{
         templateUrl:'views/chart.html',
         url:'/chart',
         controller:'ChartCtrl',
@@ -133,35 +142,35 @@ angular
           }
         }
     })
-      .state('dashboard.table',{
+      .state('portal.table',{
         templateUrl:'views/table.html',
         url:'/table'
     })
-      .state('dashboard.panels-wells',{
+      .state('portal.panels-wells',{
         templateUrl:'views/ui-elements/panels-wells.html',
         url:'/panels-wells'
       })
-      .state('dashboard.buttons',{
+      .state('portal.buttons',{
         templateUrl:'views/ui-elements/buttons.html',
         url:'/buttons'
     })
-      .state('dashboard.notifications',{
+      .state('portal.notifications',{
         templateUrl:'views/ui-elements/notifications.html',
         url:'/notifications'
     })
-      .state('dashboard.typography',{
+      .state('portal.typography',{
        templateUrl:'views/ui-elements/typography.html',
        url:'/typography'
    })
-      .state('dashboard.icons',{
+      .state('portal.icons',{
        templateUrl:'views/ui-elements/icons.html',
        url:'/icons'
    })
-      .state('dashboard.grid',{
+      .state('portal.grid',{
        templateUrl:'views/ui-elements/grid.html',
        url:'/grid'
    })
-       .state('dashboard.countries',{
+       .state('portal.countries',{
        templateUrl:'views/countries/list.html',
        url:'/countries'
    })
