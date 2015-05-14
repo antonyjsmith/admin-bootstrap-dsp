@@ -7,13 +7,6 @@
  * Controller of the sbAdminApp
  */
 angular.module('services', ['ngResource'])
-
-  .controller('ServicesController', ['$scope', 'CountriesTest',
-  				function($scope, CountriesTest) {
-	  		
-	  		console.log(CountriesTest.query());
-	  				
-  	}])
   	
   .factory('PasswordServices', ['$resource', 'DSP_URL',
 	function($resource, DSP_URL){
@@ -25,19 +18,109 @@ angular.module('services', ['ngResource'])
 	    })
 	    
 	}])
+	
+	  /*
+	  	Get term list - used by custom filter globalTerms to swap out title ID's for text
+	  */
+	  
+	.factory('GlobalTerms', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource('https://core.maxwelllucas.com/rest/db/global_terms', {}, {
+		    
+		    query: {
+	      	method:'GET',
+	      	isArray:false,
+
+		  	}
+		    
+	    } )
+	    
+	  }])
+	  
+	.factory('riskTerms', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + "/rest/db/rating_terms?filter=value=:Value AND type=':Type'", {}, {
+		    
+		    query: {
+	      	method:'GET',
+	      	isArray:false,
+
+		  	}
+		    
+	    } )
+	    
+	  }])
+	
+	  /*
+	  	Get the list of countries and related 
+	  */	
   
-  
-  .factory('CountriesTest', ['$resource', 'DSP_URL',
+  .factory('CountryList', ['$resource', 'DSP_URL',
 	  function($resource, DSP_URL){
 	  	  
-	    return $resource(DSP_URL + '/rest/ml-sql/globalwatch_country', {}, {
+	    return $resource(DSP_URL + '/rest/ml-sql/globalwatch_country?order=countryName&fields=countryID%2CcountryRating%2CcountryName%2CcountryISO%2CcountryISO3&related=data_evacuation_levels_by_country_id', {}, {
 	      query: {
 	      	method:'GET',
-	      	isArray:false
-	      	
+	      	isArray:true,
+	      	transformResponse: function(data, header) {
+	      		var wrapped = angular.fromJson(data);
+	      		return wrapped.record;
+		  		}
 		  	}
 	      
 	    })
 	    
-	}]);
+	}])
+	
+	  /*
+	  	Get data from country table for individual record using the country id grabbed from the URL
+	  */
+	  
+	.factory('CountryGeoDetail', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/ml-sql/country_geo_data?filter=ID%3D:countryID', {}, {
+		    
+		    query: {
+		      	method:'GET',
+		      	isArray:false
+		      	}
+		      	
+		    })
+	    
+	  }])
+	  
+	  /*
+	  	Get data from country table for individual record using the country id  from the URL
+	  */
+	  
+	.factory('CountryDetail', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/ml-sql/globalwatch_country?filter=countryID%3D:countryID', {}, {
+		    
+			query: {
+				method:'GET',
+				isArray:false
+			}
+		    
+	    })
+	    
+	  }])
+	  
+	.factory('CountryProfile', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/ml-sql/globalwatch_country/:countryID', {}, {
+		    
+			query: {
+				method:'GET',
+				params:{
+					related : 'data_evacuation_levels_by_country_id,globalwatch_country_entries_by_entryCountryID,iprofile_vaccinations_by_countryISO'
+				},
+				isArray:false
+			}
+		    
+	    })
+	    
+	  }])	
+	
+	;
 

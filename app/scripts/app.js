@@ -21,7 +21,11 @@ angular
     'ngDreamFactory',
     'services',
     'error',
-    'userAuthManage'
+    'filters',
+    'userAuthManage',
+    'datatables',
+    'datatables.bootstrap',
+    'uiGmapgoogle-maps'
   ])
   
 	.constant('DSP_URL', 'https://core.maxwelllucas.com')
@@ -51,18 +55,27 @@ angular
 		    }
 		}])
 	}])
+	
+	.config(function(uiGmapGoogleMapApiProvider) {
+	    uiGmapGoogleMapApiProvider.configure({
+	        //    key: 'your api key',
+	        v: '3.17',
+	        libraries: 'weather,geometry,visualization'
+	    });
+	})
   
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',
   	function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
     
     $ocLazyLoadProvider.config({
       debug:false,
-      events:true,
+      events:true
     });
 
     $urlRouterProvider.otherwise('/login');
 
     $stateProvider
+    
 		.state('login',{
 			url:'/login',
         	templateUrl:'views/pages/login.html',
@@ -94,13 +107,13 @@ angular
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                 {
-                    name:'sbAdminApp',
-                    files:[
-                    'scripts/directives/header/header.js',
-                    'scripts/directives/header/header-notification/header-notification.js',
-                    'scripts/directives/sidebar/sidebar.js',
-                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
-                    ]
+	                name:'sbAdminApp',
+	                files:[
+	                'scripts/directives/header/header.js',
+	                'scripts/directives/header/header-notification/header-notification.js',
+	                'scripts/directives/sidebar/sidebar.js',
+	                'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+	                ]
                 }),
                 $ocLazyLoad.load(
                 {
@@ -118,7 +131,7 @@ angular
                 {
                   name:'ngTouch',
                   files:['bower_components/angular-touch/angular-touch.js']
-                })
+                })            
             }
         }
     })
@@ -194,9 +207,57 @@ angular
        url:'/grid'
    })
        .state('portal.countries',{
-       templateUrl:'views/countries/list.html',
-       url:'/countries'
+       templateUrl:'views/countries/country.list.html',
+       controller:'countryListController',
+       url:'/countries',
+        resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+				name:'countries',
+				files:["scripts/controllers/countries.js"]
+            })
+          }
+        }
    })
+    .state('portal.countrySummary',{
+		templateUrl:'views/countries/country.summary.html',
+		controller:'countryProfileController',
+		url:'/countries/summary/:countryID',
+		resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+				name:'countries',
+				files:["scripts/controllers/countries.js"]
+            })
+          }
+        }
+   })
+	.state('portal.countrySummary.profile',{
+		templateUrl:'views/countries/country.profile.html',
+		url:'/profile'
+	})
+	
+	.state('portal.countrySummary.map',{
+		templateUrl:'views/countries/country.map.html',
+		controller:'countryMapController',
+		url:'/map'
+	})
+	
+	.state('portal.countrySummary.threat',{
+		templateUrl:'views/countries/country.threat.html',
+		url:'/threat'
+	})
+	.state('portal.countrySummary.evacuation',{
+		templateUrl:'views/countries/country.evacuation.html',
+		url:'/evacuation'
+	})
+	
+	.state('portal.countrySummary.incidents',{
+		templateUrl:'views/countries/country.incidents.html',
+		url:'/incidents'
+	})
+   
+   
   }]);
 
     

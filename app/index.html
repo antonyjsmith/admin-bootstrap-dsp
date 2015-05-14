@@ -19,16 +19,25 @@
     <link rel="stylesheet" href="bower_components/metisMenu/dist/metisMenu.min.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" type="text/css">
+	<link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css">
     <!-- endbuild -->
     
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
+	<script src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/lodash/lodash.min.js"></script>
+    <script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+
 
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -40,12 +49,12 @@
     <script src="bower_components/Chart.js/Chart.min.js"></script>
     <script src="bower_components/dreamfactory-user-management/dreamfactory-user-management.js"></script>
     <script src="bower_components/angular-dreamfactory/angular-dreamfactory.js"></script>
-    <script src="scripts/controllers/services.js"></script>
-    <script src="scripts/controllers/error.js"></script>
-    <script src="scripts/controllers/userAuthManage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-    
+    <script src="scripts/controllers/services.js"></script>
+    <script src="scripts/controllers/error.js"></script>
+    <script src="scripts/controllers/filters.js"></script>
+    <script src="scripts/controllers/userAuthManage.js"></script>
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="js/sb-admin-2.js"></script>
