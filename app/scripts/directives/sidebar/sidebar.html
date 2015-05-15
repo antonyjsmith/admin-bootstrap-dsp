@@ -13,7 +13,7 @@
             </li>
                     
             <li ui-sref-active="active">
-                <a ui-sref="portal.table"><i class="fa fa-warning fa-fw"></i> Incident</a>
+                <a ui-sref="portal.incidents"><i class="fa fa-warning fa-fw"></i> Incident</a>
             </li>
             
             <li ng-class="{active: collapseVar==1}">{{dropDown}}
@@ -27,7 +27,7 @@
                         <a ui-sref="portal.buttons">Evacuation</a>
                     </li>
                     <li ui-sref-active="active">
-                        <a ui-sref="portal.notifications">Incident</a>
+                        <a ui-sref="portal.mapIncident">Incident</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -35,7 +35,7 @@
                         
             <li ui-sref-active="active">
 
-                <a ui-sref="portal.chart"><i class="fa fa-info-circle fa-fw"></i> Advice<span></span></a>
+                <a ui-sref="portal.advice"><i class="fa fa-info-circle fa-fw"></i> Advice<span></span></a>
 
             </li>
             
@@ -44,20 +44,6 @@
                 <a ui-sref="portal.form"><i class="fa fa-bell fa-fw"></i> Notifications</a>
                 
             </li>
-            
-           <!-- <li ng-class="{active:collapseVar==4}">
-                <a href="" ng-click="check(4)"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=4">
-                    <li ng-class="{active: selectedMenu=='blank'}">
-                        <a ui-sref="dashboard.blank" ng-click="selectedMenu='blank'">Blank Page</a>
-                    </li>
-                    <li>
-                        <a ui-sref="login">Login Page</a>
-                    </li>
-                </ul>
-
-            </li> /.nav-second-level -->
             
         </ul>
     </div>

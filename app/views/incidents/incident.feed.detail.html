@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">{{incident.title}}</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+	<div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Summary
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+			                <tr>
+			                    <td><b>Countries</b></td>
+			                    <td><span ng-repeat="items in incident.terms.country">{{items.name}} </span></td>
+			                </tr>
+			                <tr>
+			                    <td><b>Date</b></td>
+			                    <td ng-bind-html="incident.date_gmt"></td>
+							<tr>
+			                    <td><b>Rating</b></td>
+			                    <td ng-bind-html="incident.rating_data.incident_rating"></td>
+			                </tr>
+			                </tr>
+			                <tr>
+			                    <td><b>Tags</b></td>
+			                    <td><span ng-repeat="items in incident.terms.post_tag">{{items.name}}, </span></td>
+			                </tr>
+			                <tr>
+			                    <td><b>Details</b></td>
+			                    <td ng-bind-html="incident.content | markdown"></td>
+			                </tr>	
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+        </div>
+    </div>
+    <!-- /.col-lg-6 -->
+    
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Map
+            </div>
+            <div class="panel-body">
+	            <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+	            	<ui-gmap-marker
+				        idKey='incident.ID'
+				        coords='point'
+				        >
+					</ui-gmap-marker>
+	            </ui-gmap-google-map>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-lg-6 -->
+</div>

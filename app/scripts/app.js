@@ -25,7 +25,8 @@ angular
     'userAuthManage',
     'datatables',
     'datatables.bootstrap',
-    'uiGmapgoogle-maps'
+    'uiGmapgoogle-maps',
+    'LocalStorageModule'
   ])
   
 	.constant('DSP_URL', 'https://core.maxwelllucas.com')
@@ -219,10 +220,10 @@ angular
           }
         }
    })
-    .state('portal.countrySummary',{
-		templateUrl:'views/countries/country.summary.html',
+    .state('portal.countryOverview',{
+		templateUrl:'views/countries/country.overview.html',
 		controller:'countryProfileController',
-		url:'/countries/summary/:countryID',
+		url:'/countries/overview/:countryID',
 		resolve: {
           loadMyFile:function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -232,29 +233,90 @@ angular
           }
         }
    })
-	.state('portal.countrySummary.profile',{
+	.state('portal.countryOverview.profile',{
 		templateUrl:'views/countries/country.profile.html',
 		url:'/profile'
 	})
 	
-	.state('portal.countrySummary.map',{
+	.state('portal.countryOverview.map',{
 		templateUrl:'views/countries/country.map.html',
 		controller:'countryMapController',
 		url:'/map'
 	})
 	
-	.state('portal.countrySummary.threat',{
+	.state('portal.countryOverview.threat',{
 		templateUrl:'views/countries/country.threat.html',
 		url:'/threat'
 	})
-	.state('portal.countrySummary.evacuation',{
+	.state('portal.countryOverview.evacuation',{
 		templateUrl:'views/countries/country.evacuation.html',
 		url:'/evacuation'
 	})
 	
-	.state('portal.countrySummary.incidents',{
+	.state('portal.countryOverview.incidents',{
 		templateUrl:'views/countries/country.incidents.html',
 		url:'/incidents'
+	})
+	
+	.state('portal.incidents',{
+		templateUrl:'views/incidents/incident.feed.html',
+		controller:'incidentFeedController',
+		url:'/incident/feed',
+		resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+				name:'incidents',
+				files:["scripts/controllers/incidents.js"]
+            })
+          }
+        }
+	})
+	
+	.state('portal.incidentDetail',{
+		templateUrl:'views/incidents/incident.feed.detail.html',
+		controller: 'incidentDetailCtrl',
+		url:'/incident/feed/:incidentID',
+		resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+				name:'incidents',
+				files:["scripts/controllers/incidents.js"]
+            })
+          }
+        }
+	})
+	
+	.state('portal.advice',{
+		templateUrl:'views/advice/advice.html',
+		controller: 'adviceController',
+		url:'/advice/',
+		resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+				name:'advice',
+				files:["scripts/controllers/advice.js"]
+            })
+          }
+        }
+	})
+	
+	.state('portal.mapIncident',{
+		templateUrl:'views/maps/map.incident.html',
+		controller: 'incidentMapController',
+		url:'/maps/incidents',
+		resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+				name:'advice',
+				files:["scripts/controllers/maps.js"]
+            }),
+            $ocLazyLoad.load(
+            {
+               name:'ngMap',
+               files:["bower_components/ngmap/build/scripts/ng-map.min.js"]
+            })
+          }
+        }
 	})
    
    

@@ -32,7 +32,7 @@
 			        }),
 			        
 			        DTColumnBuilder.newColumn('countryID').withTitle('View').renderWith(function(data, type, full) {
-			            return '<a href="#/portal/countries/summary/'+data+'">View</a>';
+			            return '<a href="#/portal/countries/overview/'+data+'">View</a>';
 			        })
 			    ];
 			    
@@ -71,14 +71,45 @@
 				  				
   	}])
   	
- 	.controller('countryMapController', ['$scope', '$filter', 'CountryProfile', 'uiGmapGoogleMapApi',
- 				function($scope, $filter, CountryProfile, uiGmapGoogleMapApi) {
+ 	.controller('countryMapController', ['$scope', '$filter', '$http', 'CountryProfile', 'CountryGeoDetail', 'uiGmapGoogleMapApi',
+ 				function($scope, $filter, $http, CountryProfile, CountryGeoDetail, uiGmapGoogleMapApi) {
+	 				
+	 				$scope.path = [];
+	 				
+					var geoDetails = CountryGeoDetail.query({countryID : $scope.countryID});
+					
+					geoDetails.$promise.then(function(){
 						
-			uiGmapGoogleMapApi.then(function(maps) {
-				$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
-			});	  	  			  		
+						uiGmapGoogleMapApi.then(function(maps) {
+							
+							$scope.map = { center: { latitude: geoDetails.record[0].BGNc_latitude, longitude: geoDetails.record[0].BGNc_longitude }, zoom: 4 };
+							
+							
+						});	  	
+						
+						var polygon = $http.get('data/geo-json/countries/' + geoDetails.record[0].ISO3166A3 + '.geo.json').success(function(response) {
+							
+							_.each(response.features[0].geometry.coordinates, function(array){
+								
+								_.each(array, function(array){
+																
+									var point 			= new Object({});
+									point['latitude'] 	= array[1];
+									point['longitude']	= array[0];
+									
+									$scope.path.push(point);
+																	
+								})
+								
+							})
+							
+						});
+						
+					})
+						 				
+	 				
+																  			  		
 
-				  				
   	}])
   	  	
   	;

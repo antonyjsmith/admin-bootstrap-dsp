@@ -50,6 +50,8 @@ angular.module('services', ['ngResource'])
 	    } )
 	    
 	  }])
+	  
+///////////////// COUNTRIES /////////////////
 	
 	  /*
 	  	Get the list of countries and related 
@@ -120,7 +122,74 @@ angular.module('services', ['ngResource'])
 		    
 	    })
 	    
-	  }])	
+	  }])
+	  
+	.factory('CountryGeoDetail', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/ml-sql/country_geo_data?filter=ID%3D:countryID', {}, {
+		    
+		    query: {
+		      	method:'GET',
+		      	isArray:false
+		      	}
+		      	
+		    })
+	    
+	  }])
+	  
+///////////////// INCIDENTS /////////////////
+	  	
+	.factory('wpPosts', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource( DSP_URL + "/rest/wp_posts/wp_4_posts?include_count=true&order=post_date%20DESC&limit=:postCount&offset=0&filter=post_status='publish'", {}, {
+		    	query: {
+		      		method:'GET',
+			  		isArray:false,
+		      	}
+	    	})
+	    
+	  }])
+	  
+	.factory('Incident', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/wp_incident_feed/posts/:incidentID', {}, {
+		    query: {
+		      	method:'GET',
+		      	isArray:false
+		      	}
+		      	
+		      	})
+	    
+	  }])
+	  	  
+	/* Subtle difference to above! returns array rather than single object */
+	  	  
+	.factory('Incidents', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/wp_incident_feed/posts/', {}, {
+		    query: {
+		      	method:'GET',
+		      	isArray:true
+		      	}
+		      	
+		      	})
+	    
+	  }])
+	  
+///////////////// ADVICE /////////////////
+
+	.factory('Advice', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/ml-sql/data_advice_categories?related=data_advice_articles_by_category_id', {}, {
+		    query: {
+		      	method:'GET',
+		      	isArray:false
+		      	}
+		      	
+		      	})
+	    
+	  }])
+
 	
 	;
 
