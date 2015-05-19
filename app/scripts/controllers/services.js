@@ -7,6 +7,27 @@
  * Controller of the sbAdminApp
  */
 angular.module('services', ['ngResource'])
+
+	.factory('authHttpResponseInterceptor',['$q','$location',function($q,$location){
+	    return {
+	        response: function(response){
+	            if (response.status === 401) {
+	                console.log("Response 401");
+	            }
+	            return response || $q.when(response);
+	        },
+	        responseError: function(rejection) {
+	            if (rejection.status === 401) {
+	                console.log("Response Error 401",rejection);
+	                $location.path('/401').search('returnTo', $location.path());
+	            } else if (rejection.status === 403) {
+	                console.log("Response Error 403",rejection);
+	                $location.path('/403').search('returnTo', $location.path());
+	            }
+	            return $q.reject(rejection);
+	        }
+	    }
+	}])
   	
   .factory('PasswordServices', ['$resource', 'DSP_URL',
 	function($resource, DSP_URL){
@@ -115,7 +136,7 @@ angular.module('services', ['ngResource'])
 			query: {
 				method:'GET',
 				params:{
-					related : 'data_evacuation_levels_by_country_id,globalwatch_country_entries_by_entryCountryID,iprofile_vaccinations_by_countryISO'
+					related : 'data_evacuation_levels_by_country_id,globalwatch_country_entries_by_entryCountryID,iprofile_vaccinations_by_countryISO,data_reports_by_data_country_v_report'
 				},
 				isArray:false
 			}
@@ -176,6 +197,20 @@ angular.module('services', ['ngResource'])
 	    
 	  }])
 	  
+	/* Pulls from the wordpress REST api */
+	  
+	.factory('wpRestIncidents', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/wp_incident_feed/posts/?filter[posts_per_page]=:entryQty&filter[taxonomy]=country&filter[term]=:countryISO&filter[date_query][after]=:dateParam', {}, {
+		    query: {
+		      	method:'GET',
+		      	isArray:true
+		      	}
+		      	
+		      	})
+	    
+	  }])
+	  	  
 ///////////////// ADVICE /////////////////
 
 	.factory('Advice', ['$resource', 'DSP_URL',

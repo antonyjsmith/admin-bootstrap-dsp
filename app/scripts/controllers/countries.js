@@ -106,10 +106,52 @@
 						});
 						
 					})
-						 				
-	 				
-																  			  		
 
   	}])
+  	
+	.controller('incidentCountryWidgetController', ['$scope', '$routeParams', 'wpRestIncidents', 'CountryGeoDetail',
+	  function($scope, $routeParams, wpRestIncidents, CountryGeoDetail) {
+								
+		CountryGeoDetail.query({countryID : $scope.countryID},
+			function(value) {
+				wpRestIncidents.query({entryQty : 30, countryISO : value.record[0].ISO3166A2},
+					function (incidents) {
+						$scope.recentIncidents = incidents;
+					}
+				);
+			}
+		);
+												   
+		$scope.recentIncidents = [];
+	
+		} 	  
+	])
+	
+	  .controller('reportViewController', ['$scope', 'Restangular',
+	  function($scope, Restangular) {
+	  	
+		var resource = Restangular.all('rest/ml-sql/data_report');
+	  			  			  					
+			resource.customGET([ $scope.countryData.data_reports_by_data_country_v_report[0].id + '?related=data_country_v_reports_by_report_id' ]).then(function(response){
+				$scope.report = response;
+				
+					var resourceAnalysis = Restangular.all('rest/ml-sql/data_report_analysis')
+				
+						resourceAnalysis.get("?related=data_report_analysis_contents_by_analysis_id&filter=report_id=" +response.id).then(function(analysis){
+							$scope.analysis = analysis;
+														
+					});
+					
+					var resourceActors = Restangular.all('rest/ml-sql/data_actor_v_report')
+				
+						resourceActors.get("?related=data_actors_by_actor_id&filter=report_id=" +response.id).then(function(actors){
+							$scope.actors = actors;
+														
+					});
+				
+				});
+						
+	  
+	  }])
   	  	
   	;

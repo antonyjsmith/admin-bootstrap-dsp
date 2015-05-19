@@ -62,6 +62,8 @@ angular.module('error', [])
                 $scope.currentError = $scope.parseDreamFactoryError(errorMessageObj);
             });
 	
-	}
-	
-  ]);
+	}])
+  
+  
+  
+  ;

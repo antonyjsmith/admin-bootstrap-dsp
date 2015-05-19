@@ -26,7 +26,8 @@ angular
     'datatables',
     'datatables.bootstrap',
     'uiGmapgoogle-maps',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'restangular'
   ])
   
 	.constant('DSP_URL', 'https://core.maxwelllucas.com')
@@ -56,6 +57,15 @@ angular
 		    }
 		}])
 	}])
+	
+	.config(['$httpProvider',function($httpProvider) {
+	    $httpProvider.interceptors.push('authHttpResponseInterceptor');
+	    
+	}])
+	
+    .config(['RestangularProvider', function(RestangularProvider) {
+    	RestangularProvider.setBaseUrl('https://core.maxwelllucas.com');
+    }])
 	
 	.config(function(uiGmapGoogleMapApiProvider) {
 	    uiGmapGoogleMapApiProvider.configure({
@@ -99,6 +109,26 @@ angular
 			url:'/forgot',
         	templateUrl:'views/pages/forgot.html',
         	controller: 'passwordController'
+    	})
+    	
+    	.state('error404',{
+			url:'/404',
+        	templateUrl:'views/404.html',
+    	})
+    	
+    	.state('error401',{
+			url:'/401',
+        	templateUrl:'views/401.html',
+    	})
+    	
+    	.state('error403',{
+			url:'/403',
+        	templateUrl:'views/403.html',
+    	})
+    	
+    	.state('error500',{
+			url:'/500',
+        	templateUrl:'views/500.html',
     	})
     
       .state('portal', {
@@ -250,11 +280,13 @@ angular
 	})
 	.state('portal.countryOverview.evacuation',{
 		templateUrl:'views/countries/country.evacuation.html',
+		controller:'reportViewController',
 		url:'/evacuation'
 	})
 	
 	.state('portal.countryOverview.incidents',{
 		templateUrl:'views/countries/country.incidents.html',
+		controller: 'incidentCountryWidgetController',
 		url:'/incidents'
 	})
 	

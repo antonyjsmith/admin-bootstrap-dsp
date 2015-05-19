@@ -1,6 +1,96 @@
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Evacuation</h1>        
+<div class="col-lg-8">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Current Situation
+        </div>
+        <div class="panel-body">
+			<p ng-bind-html="report.current_situation | markdown"></p>
+        </div>
     </div>
-    <!-- /.col-lg-12 -->
+</div>
+<!-- /.col-lg-8 -->
+<div class="col-lg-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Related Actors
+        </div>
+        <div class="panel-body">
+		<table class="table">
+            <tbody>
+                <tr ng-repeat="actor in actors.record">
+                    <td><a ng-href="#/reports/actors/view/{{actor.data_actors_by_actor_id.id}}"?>{{actor.data_actors_by_actor_id.name}}</a></td>
+                </tr>                                                                             
+            </tbody>
+        </table>
+	    </div>
+    </div>
+</div>
+<!-- /.col-lg-4 -->
+<div class="row" ng-repeat="entry in analysis.record">
+	<div class="col-md-8">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{entry.analysis_name}}
+        </div>
+        <div class="panel-body">
+					<table class="table">
+                        <tbody>
+                            <tr>
+                                <td><b>Intent</b></td>
+                                <td>{{entry.intent | intentTerms}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Capability</b></td>
+                                <td>{{entry.capability | capabilityTerms}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Threat Level</b></td>
+                                <td>{{entry.level}}</td>
+                            </tr>    
+                            <tr>
+                                <td><b>Category</b></td>
+                                <td>{{entry.category}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Source</b></td>
+                                <td>{{entry.source}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Threat Drivers</b></td>
+                                <td>
+	                                <ul ng-repeat="items in entry.data_report_analysis_contents_by_analysis_id | filter:{type: 'threat_driver'}:true">
+		                                <li>{{items.content}}</li>
+	                                </ul>
+	                            </td>
+                            </tr>		                            
+                            <tr>
+                                <td><b>Escalation Trigger Events</b></td>
+                                <td>
+	                                <ul ng-repeat="items in entry.data_report_analysis_contents_by_analysis_id | filter:{type: 'escalation_event'}:true">
+		                                <li>{{items.content}}</li>
+	                                </ul>
+	                            </td>
+                            </tr>
+                            <tr>
+                                <td><b>De-escalation Trigger Events</b></td>
+                                <td>
+	                                <ul ng-repeat="items in entry.data_report_analysis_contents_by_analysis_id | filter:{type: 'de_escalation_event'}:true">
+		                                <li>{{items.content}}</li>
+	                                </ul>
+	                            </td>
+                            </tr>		
+                            <tr>
+                                <td><b>Future Threats</b></td>
+                                <td>
+	                                <ul ng-repeat="items in entry.data_report_analysis_contents_by_analysis_id | filter:{type: 'future_threat'}:true">
+		                                <li>{{items.content}}</li>
+	                                </ul>
+	                            </td>
+                            </tr>			                            	                            		                              		                            		                                                                                                     
+                        </tbody>
+                    </table>
+	        </div>
+	    </div>
+		
+	</div>
 </div>

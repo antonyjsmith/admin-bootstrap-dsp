@@ -1,6 +1,26 @@
-<div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Incidents</h1>        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Recent Incidents
+            </div>
+            <div class="panel-body">
+			   	<table class="table">
+				<thead>
+				    <tr>
+				        <th>Name</th>
+				        <th>Summary</th>
+				        <th>More</th>
+				    </tr>
+				</thead>
+				<tbody>
+				    <tr ng-repeat="incident in recentIncidents">
+				        <td ng-bind-html="incident.title | markdown"></td>
+				        <td ng-bind-html="incident.excerpt | markdown"></td>						        
+				        <td><a ng-href="#/portal/incident/feed/{{incident.ID}}">Go</a></td>
+				    </tr>
+				</tbody>
+				</table>
+			</div>
+        </div>  
     </div>
     <!-- /.col-lg-12 -->
-</div>
