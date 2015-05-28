@@ -39,11 +39,13 @@
 	  				
   	}])
   	  	
- 	.controller('countryProfileController', ['$scope', '$filter', '$state', '$stateParams', 'CountryProfile', 'riskTerms',
- 				function($scope, $filter, $state, $stateParams, CountryProfile, riskTerms) {
+ 	.controller('countryProfileController', ['$scope', '$filter', '$state', '$stateParams', 'CountryProfile', 'riskTerms', 'Healix',
+ 				function($scope, $filter, $state, $stateParams, CountryProfile, riskTerms, Healix) {
 	  			  		
 	  		$scope.countryID	=	$stateParams.countryID;
 	  		$scope.countryData	=	CountryProfile.query({countryID : $scope.countryID});
+	  		
+	  		//$scope.medicalData	=	Healix.query({medCountryID : 'ru'});
 	  		
 	  		$scope.countryData.$promise.then(function (countryData){
 		  		
@@ -73,37 +75,96 @@
   	
  	.controller('countryMapController', ['$scope', '$filter', '$http', 'CountryProfile', 'CountryGeoDetail', 'uiGmapGoogleMapApi',
  				function($scope, $filter, $http, CountryProfile, CountryGeoDetail, uiGmapGoogleMapApi) {
-	 				
-	 				$scope.path = [];
+	 					 				
+	 				var paths = new Object({});
+	 				paths.type = "FeatureCollection";
+	 				paths.features = [];
+	 				var polyFillCtr = 0;
 	 				
 					var geoDetails = CountryGeoDetail.query({countryID : $scope.countryID});
 					
 					geoDetails.$promise.then(function(){
 						
-						uiGmapGoogleMapApi.then(function(maps) {
-							
-							$scope.map = { center: { latitude: geoDetails.record[0].BGNc_latitude, longitude: geoDetails.record[0].BGNc_longitude }, zoom: 4 };
-							
-							
-						});	  	
-						
 						var polygon = $http.get('data/geo-json/countries/' + geoDetails.record[0].ISO3166A3 + '.geo.json').success(function(response) {
-							
-							_.each(response.features[0].geometry.coordinates, function(array){
+																								
+							if (response.features[0].geometry.type === 'Polygon'){
 								
-								_.each(array, function(array){
-																
-									var point 			= new Object({});
-									point['latitude'] 	= array[1];
-									point['longitude']	= array[0];
+								var id = 0;
+								
+								_.each(response.features[0].geometry.coordinates, function(array){
+										
+									var nest						= [];
+									nest.push(array);
+																																						
+									var point						= new Object({});
+									point['id']						= ++id;
+									point['geometry']				= new Object({});
+									point.geometry['coordinates'] 	= nest;
+									point.geometry['type'] 			= "Polygon";
 									
-									$scope.path.push(point);
-																	
+									paths.features.push(point)
+										
 								})
 								
-							})
+								
+							} else if (response.features[0].geometry.type === 'MultiPolygon'){
+																		
+								var id = 0;
+								
+								_.each(response.features[0].geometry.coordinates, function(array){
+								
+									var point						= new Object({});
+									point['id']						= ++id;
+									point['geometry']				= new Object({});
+									point.geometry['coordinates'] 	= array;
+									point.geometry['type'] 			= "Polygon";
+																			
+									paths.features.push(point)
+									
+								
+								})
 							
+							
+							};
+							
+							uiGmapGoogleMapApi.then(function(maps) {
+																						
+									$scope.map = {
+							          center: {
+							            latitude: geoDetails.record[0].BGNc_latitude,
+							            longitude: geoDetails.record[0].BGNc_longitude
+							          },
+							          pan: true,
+							          zoom: 4,
+							          refresh: false,
+							          events: {},
+							          bounds: {},
+							          polys: [],
+							          getPolyFill: function(model){
+							            if(!model){
+							              console.log("model undefined!");
+							              return;
+							            }
+							            polyFillCtr += 1;
+							            console.log("polyFillCtr: " + polyFillCtr + ", id: " + model.id);
+							            return { color: '#2c8aa7', opacity: '0.3' };
+							          },
+							          polyEvents: {
+							            click: function (gPoly, eventName, polyModel) {
+							              window.alert("Poly Clicked: id:" + polyModel.$id + ' ' + JSON.stringify(polyModel.path));
+							            }
+							          },
+							          draw: undefined
+							        };
+							        
+									$scope.map.polys = paths.features;
+									
+									console.log($scope.map.polys);
+							        							
+							});
+																							
 						});
+												
 						
 					})
 

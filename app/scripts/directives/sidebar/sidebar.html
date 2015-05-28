@@ -16,7 +16,11 @@
                 <a ui-sref="portal.incidents"><i class="fa fa-warning fa-fw"></i> Incident</a>
             </li>
             
-            <li ng-class="{active: collapseVar==1}">{{dropDown}}
+            <li ui-sref-active="active">
+                <a ui-sref="portal.map"><i class="fa fa-map-marker fa-fw"></i> Mapping</a>
+            </li>
+            
+          <!--  <li ng-class="{active: collapseVar==1}">{{dropDown}}
                 <a href="" ng-click="check(1)"><i class="fa fa-map-marker fa-fw"></i> Maps<span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" collapse="collapseVar!=1">
@@ -30,8 +34,8 @@
                         <a ui-sref="portal.mapIncident">Incident</a>
                     </li>
                 </ul>
-                <!-- /.nav-second-level -->
-            </li>
+                 /.nav-second-level -->
+        <!--    </li> -->
                         
             <li ui-sref-active="active">
 

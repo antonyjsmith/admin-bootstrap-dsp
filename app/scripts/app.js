@@ -332,8 +332,8 @@ angular
         }
 	})
 	
-	.state('portal.mapIncident',{
-		templateUrl:'views/maps/map.incident.html',
+	.state('portal.map',{
+		templateUrl:'views/maps/map.html',
 		controller: 'incidentMapController',
 		url:'/maps/incidents',
 		resolve: {

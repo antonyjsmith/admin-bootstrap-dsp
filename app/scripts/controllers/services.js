@@ -224,7 +224,19 @@ angular.module('services', ['ngResource'])
 		      	})
 	    
 	  }])
-
+	  
+	  
+	.factory('Healix', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/healix/api/Country/getByISOCode/:medCountryID', {}, {
+		    query: {
+		      	method:'GET',
+		      	isArray:true
+		      	}
+		      	
+		      	})
+	    
+	  }])
 	
 	;
 
