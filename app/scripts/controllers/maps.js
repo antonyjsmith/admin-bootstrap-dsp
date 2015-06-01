@@ -1,11 +1,9 @@
 'use strict';
   angular.module('maps', [])	
 	
-	.controller('incidentMapController', ['$scope', '$http', 'Incidents', 'CountryList', 'uiGmapGoogleMapApi',
-	  function($scope, $http, Incidents, CountryList, uiGmapGoogleMapApi) {
-		  		  
-		  	$scope.markers = [];
-		  	
+	.controller('incidentMapController', ['$scope', '$http', '$timeout', 'Incidents', 'CountryList', 'geoIncident', 'uiGmapGoogleMapApi',
+	  function($scope, $http, $timeout, Incidents, CountryList, geoIncident, uiGmapGoogleMapApi) {
+		  		  		  	
             var evacPolyProperties= {
 	                    
 	                    "0": {
@@ -51,32 +49,94 @@
 	                    },
                     
                    };
-	  
-			$scope.incident = Incidents.query();
-			
-			$scope.incident.$promise.then(function (location){
-			
-				_.each(location, function (response){
-					
-					//set variables and convert string to integer
-					var lat = parseFloat(response.location_data.incident_latitude);
-					var lng = parseFloat(response.location_data.incident_longitude);
-					
-					var point = {
+                   
+                   
+            $scope.incidentParams 				= new Object({});
+		  	$scope.incidentParams.count 		= 20;
+            $scope.incidentParams.dateBefore 	= new Date();
+            $scope.incidentParams.dateAfter		= null;
+                   
+            $scope.loading = false;
+            
+            //Open or close datepicker
+			$scope.open = function($event) {
+				$event.preventDefault();
+				$event.stopPropagation();
+				
+				$scope.opened = true;
+			};
+                   
+		  	$scope.markers = [];
+		  	
+		  	//Set max date in date picker
+		  	
+		  	$scope.maxDate = new Date();	
+		  	
+		  	var populateMarkerModel = function(input){
+			  	
+			  		//$scope.markers.length = 0;
+
+					_.each(input, function (incident){
 						
-						latitude: lat,
-						longitude: lng,
-						id: response.ID,
-						title: '<b><p>' + response.title + ' - Incident Rating: ' + response.rating_data.incident_rating + '</p></b>' + response.excerpt + '<a href="/#/portal/incident/feed/' + response.ID + '">More...</a>',
-						icon: "assets/level-" + response.rating_data.incident_rating + ".svg"
+						//set variables and convert string to integer
+						var lat = parseFloat(incident.location_data.incident_latitude);
+						var lng = parseFloat(incident.location_data.incident_longitude);
 						
-						};
-					
-					$scope.markers.push(point);
-										
-				});					
+						var point = {
 							
-			})
+								latitude: lat,
+								longitude: lng,
+								id: incident.ID,
+								title: '<b><p>' + incident.title + ' - Incident Rating: ' + incident.rating_data.incident_rating + '</p></b>' + incident.excerpt + '<a href="/#/portal/incident/feed/' + incident.ID + '">More...</a>',
+								icon: "assets/level-" + incident.rating_data.incident_rating + ".svg"
+							
+							};
+						
+						$scope.markers.push(point);
+																	
+					});
+					
+					$scope.loading = false;
+					
+					//console.log($scope.markers.length);			  	
+			  	
+		  	};
+		  	
+			$scope.getIncidents = function (){
+				
+				$scope.incident = Incidents.query();
+			
+				$scope.incident.$promise.then(function (location){
+					
+					populateMarkerModel(location);
+																	
+				})
+				
+			};
+			
+			$scope.getIncidents();
+	  
+						
+			$scope.updateIncidents = function (){
+				
+				var a = $scope.incidentParams.dateBefore; // today!
+			  	var b = $scope.incidentParams.dateAfter; // today too!
+						
+				var fromDate = a.toISOString(a.setDate(a.getDate())).slice(0, 19)
+				var toDate = b.toISOString(b.setDate(b.getDate())).slice(0, 19)
+								
+				$scope.loading = true;
+				
+				$scope.incident = Incidents.query({postCount:$scope.incidentParams.count, dateBefore:fromDate, dateAfter:toDate});
+			
+				$scope.incident.$promise.then(function (location){
+					
+					populateMarkerModel(location);
+																	
+				})
+				
+			};
+						
 			
 			  $scope.markersEvents = {
 			    click: function (gMarker, eventName, model) {
@@ -84,6 +144,8 @@
 			      model.show = !model.show;
 			    }
 			  };
+			  
+			
 			
 			var paths = new Object({});
 			paths.type = "FeatureCollection";
@@ -178,7 +240,7 @@
 			
 			//This by far the most elegant method, due to a bug in uiGmapGoogleMapApi visibility cannot be bound to a model so this a nasty workaround
 		  	  	
-		  	$scope.layerModel = 1;
+		  	$scope.layerModel = 0;
 		
 		  	$scope.switchLayer = function (layer){
 		  		
@@ -211,7 +273,7 @@
 		          },
 		          pan: true,
 		          zoom: 2,
-		          visible: true,
+		          visible: false,
 		          events: {},
 		          bounds: {},
 		          polys: [],
@@ -260,7 +322,116 @@
 				$scope.map2.polys = paths.features;
 									
 			});
-				       						
+			
+	        $scope.circle =
+	            {
+	                center: {
+	                    latitude: 53,
+	                    longitude: -1.45
+	                },
+	                radius: 1000000,
+	                stroke: {
+	                    color: '#08B21F',
+	                    weight: 2,
+	                    opacity: 1
+	                },
+	                fill: {
+	                    opacity: 0.0
+	                },
+	                geodesic: true, // optional: defaults to false
+	                draggable: true, // optional: defaults to false
+	                clickable: true, // optional: defaults to true
+	                editable: true, // optional: defaults to false
+	                visible: true, // optional: defaults to true
+	                events:{
+			            dragend: function (gCircle, eventName, circleModel) {
+				          $scope.circle.center = circleModel.center;
+			              console.log(circleModel);
+			            },
+			            radius_changed: function (gCircle, eventName, circleModel) {
+				          $scope.circle.radius = circleModel.radius;
+			              console.log(circleModel);
+			            },		                
+	                },
+	                control: {}
+	            };
+	        	        
+				
+			$scope.updateGeoIncidents = function (){
+				
+				var locQuery = {"params": [
+						        {
+						            "name": "lat",
+						            "param_type": "IN",
+						            "value": $scope.circle.center.latitude
+						        },
+						        {
+						            "name": "lon",
+						            "param_type": "IN",
+						            "value": $scope.circle.center.longitude
+						        },
+						        {
+							        "name": "rad",
+						            "param_type": "IN",
+						            "value": getMiles($scope.circle.radius)
+						        }
+						    ]
+						  };
+						        
+				var geo = geoIncident.query(locQuery);
+				
+				geo.$promise.then(function (response){
+					
+					populateGeoMarkerModel(response);
+					
+				});
+			
+			};
+			
+			function getMiles(i) {
+			     return i*0.000621371192;
+			}
+			
+		  	var populateGeoMarkerModel = function(input){
+			  	
+			  		$scope.markers.length = 0;
+			  		
+			  		//set a small delay to make sure the map is cleared first [evalAsync doesn't work for some reason]
+			  		$timeout(function () {
+				  		
+						_.each(input, function (incident){
+							
+							//set variables and convert string to integer
+							var lat = parseFloat(incident.incident_latitude);
+							var lng = parseFloat(incident.incident_longitude);
+							
+							var point = {
+								
+									latitude: lat,
+									longitude: lng,
+									id: incident.ID,
+									title: '<b><p>' + incident.title + ' - Incident Rating: ' + incident.incident_rating + '</p></b>' + incident.excerpt + '<a href="/#/portal/incident/feed/' + incident.ID + '">More...</a>',
+									icon: "assets/level-" + incident.incident_rating + ".svg"
+								
+								};
+							
+							$scope.markers.push(point);
+																		
+						});
+						
+					}, 250);
+					
+					$scope.loading = false;
+					
+					//console.log($scope.markers.length);			  	
+			  	
+		  	};
+		  	
+		  	$scope.clearMarkers = function(){
+			  	
+			  	$scope.markers.length = 0;
+			  	
+		  	};	       						
 					  
 	  }])
 	  

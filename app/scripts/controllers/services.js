@@ -187,9 +187,22 @@ angular.module('services', ['ngResource'])
 	  	  
 	.factory('Incidents', ['$resource', 'DSP_URL',
 	  function($resource, DSP_URL){
-	    return $resource(DSP_URL + '/rest/wp_incident_feed/posts/', {}, {
+	    return $resource(DSP_URL + '/rest/wp_incident_feed/posts/?filter[posts_per_page]=:postCount&filter[date_query][before]=:dateBefore&filter[date_query][after]=:dateAfter', {}, {
 		    query: {
 		      	method:'GET',
+		      	isArray:true
+		      	}
+		      	
+		      	})
+	    
+	  }])
+	  
+	.factory('geoIncident', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/wp_posts/_proc/queryAlerts', {}, {
+		    
+		    query: {
+		      	method:'POST',
 		      	isArray:true
 		      	}
 		      	

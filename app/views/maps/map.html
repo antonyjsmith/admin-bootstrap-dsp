@@ -8,6 +8,57 @@
     
     <div class="row">
 	    <div class="col-lg-12">
+		    <p>Incidents</p>
+		    <pre>{{incidentParams}} - {{loading}} - {{circle}}</pre>
+		    <div class="row">
+			    <div class="col-md-3">
+			    	<input type="number" ng-model="incidentParams.count" class="form-control">
+			    </div>
+		    </div>
+		    
+		    <h4>Popup</h4>
+		    
+		    <div class="row">
+		        <div class="col-md-6">
+		            <p class="input-group">
+		              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateBefore" is-open="opened" max-date="maxDate" ng-required="true" close-text="Close" />
+		              <span class="input-group-btn">
+		                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+		              </span>
+		            </p>
+		        </div>
+		        <div class="col-md-6">
+		            <p class="input-group">
+		              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateAfter" is-open="opened" max-date="maxDate" ng-required="true" close-text="Close" />
+		              <span class="input-group-btn">
+		                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+		              </span>
+		            </p>
+		        </div>
+		    </div>
+		    
+		    <div class="row">
+			    <div class="col-md-3">
+				<!--    <button type="button" class="btn btn-primary" ng-click="updateIncidents()">
+						Update
+					</button> -->
+				    <button type="button" class="btn btn-primary" ng-click="updateGeoIncidents()">
+						Update Location
+					</button>
+				    <button type="button" class="btn btn-primary" ng-click="clearMarkers()">
+						Clear Markers
+					</button>
+				</div>
+			    <div class="col-md-3" ng-show="loading">
+					    <p>Loading</p>
+				    	<i class="fa fa-spinner fa-spin fa-2x"></i>
+				</div>
+			</div>
+		    
+
+			
+
+					    
 		    <p>Layers</p>
 		    <div class="btn-group">
 		        <label class="btn btn-success" ng-model="layerModel" btn-radio="0" ng-click="switchLayer(0)">Off</label>
@@ -43,6 +94,11 @@
 	                         editable="false" events="map2.polyEvents" static="true" ng-cloak="">
 	
 				</ui-gmap-polygons>
+				
+				<ui-gmap-circle center="circle.center" stroke="circle.stroke" fill="circle.fill" radius="circle.radius"
+                	visible="circle.visible" geodesic="circle.geodesic" editable="circle.editable" draggable="circle.draggable"
+					clickable="circle.clickable" control="circle.control" events="circle.events">
+                </ui-gmap-circle>
 
 			</ui-gmap-google-map>
 
