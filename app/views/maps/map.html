@@ -8,68 +8,66 @@
     
     <div class="row">
 	    <div class="col-lg-12">
-		    <p>Incidents</p>
-		    <pre>{{incidentParams}} - {{loading}} - {{circle}}</pre>
-		    <div class="row">
-			    <div class="col-md-3">
-			    	<input type="number" ng-model="incidentParams.count" class="form-control">
-			    </div>
-		    </div>
-		    
-		    <h4>Popup</h4>
 		    
 		    <div class="row">
-		        <div class="col-md-6">
-		            <p class="input-group">
-		              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateBefore" is-open="opened" max-date="maxDate" ng-required="true" close-text="Close" />
-		              <span class="input-group-btn">
-		                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-		              </span>
-		            </p>
-		        </div>
-		        <div class="col-md-6">
-		            <p class="input-group">
-		              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateAfter" is-open="opened" max-date="maxDate" ng-required="true" close-text="Close" />
-		              <span class="input-group-btn">
-		                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-		              </span>
-		            </p>
-		        </div>
-		    </div>
-		    
-		    <div class="row">
-			    <div class="col-md-3">
-				<!--    <button type="button" class="btn btn-primary" ng-click="updateIncidents()">
-						Update
-					</button> -->
-				    <button type="button" class="btn btn-primary" ng-click="updateGeoIncidents()">
-						Update Location
-					</button>
-				    <button type="button" class="btn btn-primary" ng-click="clearMarkers()">
-						Clear Markers
-					</button>
-				</div>
-			    <div class="col-md-3" ng-show="loading">
-					    <p>Loading</p>
-				    	<i class="fa fa-spinner fa-spin fa-2x"></i>
-				</div>
+
 			</div>
 		    
 
-			
+	    </div>
+    </div>
+    
+    <div class="row">
+	    <div class="col-lg-3">
+		    
+		    <p>Filters</p>
+		    
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateBefore" is-open="opened" max-date="maxDate" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
 
-					    
-		    <p>Layers</p>
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateAfter" is-open="opened" max-date="maxDate" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+           
+            <p>
+	            <input type="number" ng-model="incidentParams.count" class="form-control">
+            </p>
+            
+        	<!--    <button type="button" class="btn btn-primary" ng-click="updateIncidents()">
+				Update
+			</button> -->
+		    <button type="button" class="btn btn-primary" ng-click="updateGeoIncidents()">
+				Update Incidents
+			</button>
+		    <button type="button" class="btn btn-primary" ng-click="clearMarkers()">
+				Clear Incidents
+			</button>
+
+		    <span ng-show="loading">
+				    <p>Loading</p>
+			    	<i class="fa fa-spinner fa-spin fa-2x"></i>
+			</span>
+
+		
+			<p>Layers</p>
 		    <div class="btn-group">
 		        <label class="btn btn-success" ng-model="layerModel" btn-radio="0" ng-click="switchLayer(0)">Off</label>
 		        <label class="btn btn-success" ng-model="layerModel" btn-radio="1" ng-click="switchLayer(1)">Risk</label>
 		        <label class="btn btn-success" ng-model="layerModel" btn-radio="2" ng-click="switchLayer(2)">Evacuation</label>
 		    </div>
+		    
+		<!--    <pre>{{incidentParams}} - {{loading}} - {{circle}}</pre> -->
+		
 	    </div>
-    </div>
-    
-    <div class="row">
-	    <div class="col-lg-12">
+	    
+	    <div class="col-lg-9">
 		    
 			<ui-gmap-google-map center='map.center' zoom='map.zoom'>
 			
@@ -84,14 +82,14 @@
 				<ui-gmap-polygons models="map.polys" path='"geometry"' fill="map.polyFill"
 				
 	                         stroke="{ color: '#8C8C8C', weight: 2, opacity: '0.8' }" visible="map.visible" geodesic="true" fit="false"
-	                         editable="false" events="map.polyEvents" static="true" ng-cloak="">
+	                         editable="false" events="map.polyEvents" static="true">
 	
 				</ui-gmap-polygons>
 				
 				<ui-gmap-polygons models="map2.polys" path='"geometry"' fill="map2.polyFill"
 				
 	                         stroke="{ color: '#8C8C8C', weight: 2, opacity: '0.8' }" visible="map2.visible" geodesic="true" fit="false"
-	                         editable="false" events="map2.polyEvents" static="true" ng-cloak="">
+	                         editable="false" events="map2.polyEvents" static="true">
 	
 				</ui-gmap-polygons>
 				

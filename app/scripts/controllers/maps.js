@@ -359,6 +359,14 @@
 				
 			$scope.updateGeoIncidents = function (){
 				
+				var a = $scope.incidentParams.dateBefore; // today!
+			  	var b = $scope.incidentParams.dateAfter; // today too!
+						
+				var fromDate = a.toISOString(a.setDate(a.getDate())).slice(0, 19)
+				var toDate = b.toISOString(b.setDate(b.getDate())).slice(0, 19)
+				
+				$scope.loading = true;
+				
 				var locQuery = {"params": [
 						        {
 						            "name": "lat",
@@ -374,6 +382,21 @@
 							        "name": "rad",
 						            "param_type": "IN",
 						            "value": getMiles($scope.circle.radius)
+						        },
+						        {
+							        "name": "maxCount",
+						            "param_type": "IN",
+						            "value": $scope.incidentParams.count
+						        },
+						        {
+							        "name": "startDate",
+						            "param_type": "IN",
+						            "value": toDate
+						        },
+						        {
+							        "name": "endDate",
+						            "param_type": "IN",
+						            "value": fromDate
 						        }
 						    ]
 						  };
@@ -381,7 +404,7 @@
 				var geo = geoIncident.query(locQuery);
 				
 				geo.$promise.then(function (response){
-					
+															
 					populateGeoMarkerModel(response);
 					
 				});
@@ -393,17 +416,32 @@
 			}
 			
 		  	var populateGeoMarkerModel = function(input){
-			  	
+			  				  	
 			  		$scope.markers.length = 0;
-			  		
+			  					  		
 			  		//set a small delay to make sure the map is cleared first [evalAsync doesn't work for some reason]
 			  		$timeout(function () {
-				  		
+				  						  		
 						_.each(input, function (incident){
-							
+														
 							//set variables and convert string to integer
 							var lat = parseFloat(incident.incident_latitude);
 							var lng = parseFloat(incident.incident_longitude);
+							
+							var getRating = function(rating){
+								
+								if (rating == null) {
+									
+									console.log('Catch me');
+									return 1;
+									
+								} else {
+									
+									return rating;
+									
+								};
+								
+							};
 							
 							var point = {
 								
@@ -411,7 +449,7 @@
 									longitude: lng,
 									id: incident.ID,
 									title: '<b><p>' + incident.title + ' - Incident Rating: ' + incident.incident_rating + '</p></b>' + incident.excerpt + '<a href="/#/portal/incident/feed/' + incident.ID + '">More...</a>',
-									icon: "assets/level-" + incident.incident_rating + ".svg"
+									icon: "assets/level-" + getRating(incident.incident_rating) + ".svg"
 								
 								};
 							
@@ -419,9 +457,10 @@
 																		
 						});
 						
+						$scope.loading = false;
+						
 					}, 250);
 					
-					$scope.loading = false;
 					
 					//console.log($scope.markers.length);			  	
 			  	
