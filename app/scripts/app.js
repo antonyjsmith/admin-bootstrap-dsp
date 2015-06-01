@@ -341,11 +341,6 @@ angular
             return $ocLazyLoad.load({
 				name:'advice',
 				files:["scripts/controllers/maps.js"]
-            }),
-            $ocLazyLoad.load(
-            {
-               name:'ngMap',
-               files:["bower_components/ngmap/build/scripts/ng-map.min.js"]
             })
           }
         }
