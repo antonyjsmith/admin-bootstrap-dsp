@@ -221,10 +221,6 @@ angular
         templateUrl:'views/ui-elements/buttons.html',
         url:'/buttons'
     })
-      .state('portal.notifications',{
-        templateUrl:'views/ui-elements/notifications.html',
-        url:'/notifications'
-    })
       .state('portal.typography',{
        templateUrl:'views/ui-elements/typography.html',
        url:'/typography'
@@ -339,8 +335,22 @@ angular
 		resolve: {
           loadMyFile:function($ocLazyLoad) {
             return $ocLazyLoad.load({
-				name:'advice',
+				name:'maps',
 				files:["scripts/controllers/maps.js"]
+            })
+          }
+        }
+	})
+	
+	.state('portal.notifications',{
+		templateUrl:'views/notifications/notifications.html',
+		controller: 'notificationsController',
+		url:'/notifications',
+		resolve: {
+          loadMyFile:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+				name:'notifications',
+				files:["scripts/controllers/notifications.js"]
             })
           }
         }
