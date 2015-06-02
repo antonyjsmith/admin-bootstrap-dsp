@@ -22,13 +22,15 @@
 		    
 		    <p>Filters</p>
 		    
+		    <label>Date From</label>
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateBefore" is-open="opened" max-date="maxDate" ng-required="true" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
             </p>
-
+            
+			<label>Date to [must be earlier than Date From]</label>
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateAfter" is-open="opened" max-date="maxDate" ng-required="true" close-text="Close" />
               <span class="input-group-btn">
@@ -36,6 +38,7 @@
               </span>
             </p>
            
+           <label>Max Results</label>
             <p>
 	            <input type="number" ng-model="incidentParams.count" class="form-control">
             </p>
