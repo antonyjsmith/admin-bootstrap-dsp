@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.modal', [])
+angular.module('modal', [])
 
 .service('modalService', ['$modal',
     function ($modal) {
