@@ -27,7 +27,8 @@ angular
     'datatables.bootstrap',
     'uiGmapgoogle-maps',
     'LocalStorageModule',
-    'restangular'
+    'restangular',
+    'modal'
   ])
   
 	.constant('DSP_URL', 'https://core.maxwelllucas.com')

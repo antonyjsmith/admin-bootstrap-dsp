@@ -1,9 +1,94 @@
-<div>
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Notifications</h1>
-        </div>
-        <!-- /.col-lg-12 -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Notifications</h1>
     </div>
-    
+    <!-- /.col-lg-12 -->
 </div>
+
+<div class="row" ng-controller="locationCtrl">
+    <div class="col-lg-12">
+        <h4 class="page-header">New Notification</h4>
+        
+		<form class="form-inline">
+			
+		  <div class="form-group">
+		    <label for="notificationType">Type</label>
+		    <select id="notificationType" class="form-control">
+			  <option>Incident</option>
+			</select>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="notificationCountry">Country</label>
+		    
+			<input type="text" ng-model="selectedCountry"
+		    	placeholder="Type here to look up a country name"
+		    		typeahead="country as country.countryName for country in getLocation($viewValue)"
+		    			typeahead-loading="loadingLocations" class="form-control">
+		    			
+		    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+		    
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="exampleInputEmail2">Trigger Rating</label>
+		    <select class="form-control">
+			  <option>1</option>
+			  <option>2</option>
+			  <option>3</option>
+			  <option>4</option>
+			</select>
+		  </div>
+
+		  <!-- <button type="submit" class="btn btn-default">Add notification</button> -->
+		  
+		  <button type="submit" class="btn btn-w-md btn-gap-v btn-primary" ng-click="add(selectedCountry.countryID)">Add notification</button>
+
+		  
+		</form>
+        
+        
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <div class="col-lg-12">		
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                Current Notifications
+            </div>
+            <div class="panel-body">
+			   	<table class="table">
+					<thead>
+					    <tr>
+					        <th>Type</th>
+					        <th>Trigger Rating</th>
+					        <th>Country</th>
+					        <th>Active</th>
+					        <th>Delete</th>
+					    </tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="entry in watchList.record">
+						        <td>{{entry.type}}</td>
+						        <td>{{entry.trigger_rating}}</td>
+						        <td>
+							        {{entry.globalwatch_country_by_countryID.countryName}}
+						        </td>
+						        <td>
+							        <label class="switch switch-success">
+							        <input type="checkbox" ng-model="entry.active" ng-change="updateStatus(entry.id, entry.active, 'active')"><i></i></label>
+						        </td>				  				        
+						        <td ng-click="removeItem(entry.id,$index)">x</td>
+						    </tr>
+					    </tr>
+					</tbody>
+				</table>
+            </div>
+        </div>
+        
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+    

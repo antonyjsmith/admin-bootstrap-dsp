@@ -72,6 +72,19 @@ angular.module('services', ['ngResource'])
 	    
 	  }])
 	  
+	  
+///////////////// NOTIFICATIONS /////////////////
+
+	  
+	.factory('UserNotificationList', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/db/user_notification/:id/?filter=userID=:userID', {}, {
+	      query: {method:'GET', isArray:false}
+	    })
+	    
+	  }])
+	  
+	  	  
 ///////////////// COUNTRIES /////////////////
 	
 	  /*
