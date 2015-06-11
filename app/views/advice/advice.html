@@ -16,7 +16,7 @@
 		   			<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
 		   </accordion-heading>
 		        <ul ng-repeat="article in categories.data_advice_articles_by_category_id">
-			        <h4 ng-click="pushArticle(article)">{{article.name}}</h4>
+			        <li ng-click="pushArticle(article)">{{article.name}}</li>
 		        </ul>
 			</accordion-group>
         </accordion>

@@ -8,17 +8,44 @@
  */
  angular.module('incidents', [])
 
-	.controller('incidentFeedController', ['$scope', '$http', '$filter', '$routeParams', 'wpPosts', 'localStorageService',
-	  function($scope, $http, $filter, $routeParams, wpPosts, localStorageService) {
+	.controller('incidentFeedController', ['$scope', '$http', '$filter', '$routeParams', 'wpPosts', 'wpPostsRating', 'localStorageService',
+	  function($scope, $http, $filter, $routeParams, wpPosts, wpPostsRating, localStorageService) {
 		  
 	  	  $scope.itemsPerPage = 10;
 	  	  	  	  
-		  $scope.incidents = wpPosts.query({postCount: $scope.itemsPerPage}, function(response){
+		  //$scope.counts = wpPosts.query({postCount: $scope.itemsPerPage}, function(response){
 			
-			$scope.totalItems = response.meta.count;
+			//$scope.totalItems = response.meta.count;
 						  
-		  });
+		  //});
 		  
+		  
+		var listQuery = {"params": [
+			        {
+			            "name": "offset",
+			            "param_type": "IN",
+			            "value": $scope.currOffset
+			        },
+			        {
+			            "name": "searchString",
+			            "param_type": "IN",
+			            "value": '%%'
+			        },
+			        {
+			            "name": "count",
+			            "param_type": "OUT",
+			            "type": "integer"
+			        }
+		]};
+				  
+		$scope.incidents = wpPostsRating.query(listQuery, function(response){
+			
+			$scope.totalItems = response.count;
+						
+		}); 
+		  
+		  		 
+				        		  
 		  $scope.currOffset = 0;
 		  
 		  $scope.currShowing = $scope.currOffset + $scope.itemsPerPage;
@@ -39,13 +66,12 @@
 			  	
 		  		return localStorageService.set('incident_search_string', val);
 		  		
-			}
-			  
+			}  
 			  
 		    console.log('Page changed to: ' + $scope.currentPage);
 		    console.log('Offset ' + ($scope.currentPage - 1) * $scope.itemsPerPage);
 		    
-		    var searchString = '';
+		    var searchString = '%%';
 		    
 		    var checkSearchValue = function (val) {
 			    
@@ -55,7 +81,7 @@
 				    
 			    } else {
 				    
-				    searchString = val;
+				    searchString = '%'+val+'%';
 				    
 			    }
 			    
@@ -65,23 +91,38 @@
 		    checkSearchValue(searchValue);
 		    
 		    $scope.currOffset = ($scope.currentPage - 1) * $scope.itemsPerPage;
-		    
-		        $http.get("https://core.maxwelllucas.com/rest/wp_posts/wp_4_posts", {
-			        params:{
-				        include_count: true,
-				        order: 'post_date DESC',
-				        limit: $scope.itemsPerPage,
-				        offset: $scope.currOffset,
-				        filter: '(post_content LIKE "%' +searchString+ '%" OR post_title LIKE "%' +searchString+ '%") AND post_status = "publish"'
-			        }
-		        }).success(function(data) {
-			        
-			      $scope.incidents = data;
-			      $scope.totalItems = data.meta.count;
+		    			        
+			      //$scope.incidents = data;
+			      //$scope.totalItems = data.meta.count;
 			      
 			      $scope.currShowing = $scope.currOffset + $scope.itemsPerPage;
+
 			    
-			    });
+				var listQuery = {"params": [
+			        {
+			            "name": "offset",
+			            "param_type": "IN",
+			            "value": $scope.currOffset
+			        },
+			        {
+			            "name": "searchString",
+			            "param_type": "IN",
+			            "value": searchString
+			        },
+			        {
+			            "name": "count",
+			            "param_type": "OUT",
+			            "type": "integer"
+			        }
+				]};
+						  
+				$scope.incidents = wpPostsRating.query(listQuery, function(response){
+					
+					$scope.totalItems = response.count;
+								
+				}); 
+			    
+			    
 		  };
 		
 		  $scope.maxSize = 5;

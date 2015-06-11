@@ -15,6 +15,8 @@
 	  		
 	  		var userID = UserDataService.getCurrentUser().id;
 	  		
+	  		$scope.payload = new Object();
+	  		
 	  		//General Watchlist usage
 	  					
 			resource.customGET(['?filter=user_id=' + userID] + '&related=globalwatch_country_by_countryID').then(function(response){
@@ -41,10 +43,8 @@
 										});
 				
 				if (watching === false) {
-					$scope.payload = new Object();
 					$scope.payload['countryID'] = countryid;
 					$scope.payload['user_id'] = userID;
-					$scope.payload['trigger_rating'] = 1;
 					$scope.payload['type'] = 'incident';
 					
 					resource.customPOST($scope.payload,['?fields=*&related=globalwatch_country_by_countryID']).then(function(newRecord){

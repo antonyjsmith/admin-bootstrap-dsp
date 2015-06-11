@@ -6,7 +6,7 @@
 
 body {
 	margin-top: 100px;
-    background-color: #D5CAD6;
+    background-color: #3a3a3a;
 }
 
 @media(min-width:768px) {
@@ -30,13 +30,13 @@ body {
         position: inherit;
         margin: 0 0 0 250px;
         padding: 0 30px;
-        border-left: 1px solid #e7e7e7;
+        border-left: 1px solid #fff;
     }
 }
 
 .navbar-portal {
-  background-color: #6B5E62;
-  border-color: #e7e7e7;
+  background-color: #55c5a9;
+  border-color: #55c5a9;
 }
 
 .navbar-brand {
@@ -45,7 +45,7 @@ body {
 }
 
 .navbar-side {
-  background-color: #D5CAD6;
+  background-color: #3a3a3a;
   border-color: #e7e7e7;
 }
 
@@ -117,7 +117,7 @@ body {
 }
 
 .sidebar ul li {
-    border-bottom: 1px solid #e7e7e7;
+    border-bottom: 1px solid #767676;
 }
 
 .sidebar ul li a.active {
@@ -289,6 +289,26 @@ body {
     font-size: 40px;
 }
 
+.panel-portal {
+    border-color: #3a3a3a;
+}
+
+.panel-portal .panel-heading {
+    border-color: #3a3a3a;
+    color: #fff;
+    background-color: #3a3a3a;
+}
+
+.panel-portal-green {
+    border-color: #55c5a9;
+}
+
+.panel-portal-green .panel-heading {
+    border-color: #55c5a9;
+    color: #fff;
+    background-color: #55c5a9;
+}
+
 .panel-green {
     border-color: #5cb85c;
 }
@@ -343,8 +363,78 @@ body {
     color: #df8a13;
 }
 
+.threat-1 .panel-heading{
+	border-color: #3BAC54;
+    color: #fff;
+    background-color: #3BAC54;
+}
+
+.threat-2 .panel-heading{
+	border-color: #E2FF34;
+    color: #fff;
+    background-color: #E2FF34;
+}
+
+.threat-3 .panel-heading{
+	border-color: #FFC307;
+    color: #fff;
+    background-color: #FFC307;
+}
+
+.threat-4 .panel-heading{
+	border-color: #FF0000;
+    color: #fff;
+    background-color: #FF0000;
+}
+
+.evac-0 .panel-heading{
+	border-color: #006699;
+    color: #fff;
+    background-color: #006699;
+}
+
+.evac-1 .panel-heading{
+	border-color: #00CC00;
+    color: #fff;
+    background-color: #00CC00;
+}
+
+.evac-2 .panel-heading{
+	border-color: #FFD700;
+    color: #fff;
+    background-color: #FFD700;
+}
+
+.evac-3 .panel-heading{
+	border-color: #CC0066;
+    color: #fff;
+    background-color: #CC0066;
+}
+
+.evac-4 .panel-heading{
+	border-color: #FF0000;
+    color: #fff;
+    background-color: #FF0000;
+}
+
+.map-dash{
+	height: 350px!important;
+}
+
+.map-medium{
+	height: 450px!important;
+}
+
+.map-large{
+	height: 600px!important;
+}
+
+.angular-google-map {
+	height: inherit;
+}
+
 .angular-google-map-container {
-	height: 600px;
+	height: inherit;
 }
 
 map, div[map] {

@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <div class="panel panel-default">
+        <div class="panel panel-portal-green">
             <div class="panel-heading">
                 Incident Feed
             </div>
@@ -15,7 +15,7 @@
 	            
 	            <div class="row">
 					<div class="col-xs-6">
-						<h5>Showing {{currOffset}} to {{currShowing}} of {{incidents.meta.count}} entries</h5>
+						<h5>Showing {{currOffset}} to {{currShowing}} of {{incidents.count}} entries</h5>
 					</div>
 					
 					<div class="col-xs-6">
@@ -37,16 +37,16 @@
 					<thead>
 					    <tr>
 					        <th>Title</th>
-					        <th>Rating</th>
+					        <th class="text-center">Rating</th>
 					        <th>Date</th>
 					        <th>Excerpt</th>
 					        <th></th>
 					    </tr>
 					</thead>
 					<tbody>
-					    <tr ng-repeat="incident in incidents.record">
+					    <tr ng-repeat="incident in incidents" ng-hide="$last">
 					        <td ng-bind-html="incident.post_title | markdown"></td>
-					        <td></td>
+					        <td class="text-center">{{incident.post_rating}}</td>
 					        <td ng-bind-html="incident.post_date | markdown"></td>	
 					        <td ng-bind-html="incident.post_excerpt | markdown"></td>
 					        <td><a ng-href="#/portal/incident/feed/{{incident.ID}}">View</a></td>

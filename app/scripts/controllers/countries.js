@@ -9,7 +9,7 @@
  angular.module('countries', [])
  	.controller('countryListController', ['$scope', '$filter', 'CountryList', 'DTOptionsBuilder', 'DTColumnBuilder',
  				function($scope, $filter, CountryList, DTOptionsBuilder, DTColumnBuilder) {
-	  		
+	 					  		
 	  			$scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
 						return CountryList.query().$promise;
 					    })
@@ -30,7 +30,17 @@
 			        	return $filter('evacTerms')(lastItem);
 			        	
 			        }),
-			        
+			        DTColumnBuilder.newColumn('data_reports_by_data_country_v_report').withTitle('Reports').renderWith(function(data, type, full) {
+				        //When adding threat reports pop an array in here and populate with the icons of whatever report is available
+				        
+				        if (data.length == 0){
+					        return '';
+
+				        } else {
+					        return '<i class="fa fa-external-link"></i>';
+				        }
+			        	
+			        }),
 			        DTColumnBuilder.newColumn('countryID').withTitle('View').renderWith(function(data, type, full) {
 			            return '<a href="#/portal/countries/overview/'+data+'">View</a>';
 			        })
@@ -39,8 +49,12 @@
 	  				
   	}])
   	  	
- 	.controller('countryProfileController', ['$scope', '$filter', '$state', '$stateParams', 'CountryProfile', 'riskTerms', 'Healix',
- 				function($scope, $filter, $state, $stateParams, CountryProfile, riskTerms, Healix) {
+ 	.controller('countryProfileController', ['$scope', '$filter', '$state', '$stateParams', 'CountryProfile', 'riskTerms',
+ 				function($scope, $filter, $state, $stateParams, CountryProfile, riskTerms) {
+	 		
+	  		$scope.oneAtATime = false;
+	  		
+	  		$scope.radioModel = 'Overview';
 	  			  		
 	  		$scope.countryID	=	$stateParams.countryID;
 	  		$scope.countryData	=	CountryProfile.query({countryID : $scope.countryID});
@@ -49,8 +63,8 @@
 	  		
 	  		$scope.countryData.$promise.then(function (countryData){
 		  		
-	  			$scope.riskRating = getRatingData('evac_level',countryData.countryRating);
-	  			$scope.evacRating = getRatingData('risk_level',countryData.countryRating);
+	  			$scope.evacRating = getRatingData('evac_level',countryData.countryRating);
+	  			$scope.riskRating = getRatingData('risk_level',countryData.countryRating);
 	  			
 		  		
 	  		});
@@ -192,26 +206,34 @@
 	  function($scope, Restangular) {
 	  	
 		var resource = Restangular.all('rest/ml-sql/data_report');
-	  			  			  					
-			resource.customGET([ $scope.countryData.data_reports_by_data_country_v_report[0].id + '?related=data_country_v_reports_by_report_id' ]).then(function(response){
-				$scope.report = response;
+		
+			if ($scope.countryData.data_reports_by_data_country_v_report.length == 0){
 				
-					var resourceAnalysis = Restangular.all('rest/ml-sql/data_report_analysis')
+				$scope.report = {"current_situation":"There is currently not an evacuation report for this country"};
 				
-						resourceAnalysis.get("?related=data_report_analysis_contents_by_analysis_id&filter=report_id=" +response.id).then(function(analysis){
-							$scope.analysis = analysis;
-														
-					});
+			} else {
+			
+				resource.customGET([ $scope.countryData.data_reports_by_data_country_v_report[0].id + '?related=data_country_v_reports_by_report_id' ]).then(function(response){
 					
-					var resourceActors = Restangular.all('rest/ml-sql/data_actor_v_report')
-				
-						resourceActors.get("?related=data_actors_by_actor_id&filter=report_id=" +response.id).then(function(actors){
-							$scope.actors = actors;
-														
-					});
-				
-				});
+						$scope.report = response;
+					
+						var resourceAnalysis = Restangular.all('rest/ml-sql/data_report_analysis')
+					
+							resourceAnalysis.get("?related=data_report_analysis_contents_by_analysis_id&filter=report_id=" +response.id).then(function(analysis){
+								$scope.analysis = analysis;
+															
+						});
 						
+						var resourceActors = Restangular.all('rest/ml-sql/data_actor_v_report')
+					
+							resourceActors.get("?related=data_actors_by_actor_id&filter=report_id=" +response.id).then(function(actors){
+								$scope.actors = actors;
+															
+						});
+					
+					});	
+				
+			}
 	  
 	  }])
   	  	

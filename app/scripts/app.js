@@ -64,8 +64,8 @@ angular
 	    
 	}])
 	
-    .config(['RestangularProvider', function(RestangularProvider) {
-    	RestangularProvider.setBaseUrl('https://core.maxwelllucas.com');
+    .config(['RestangularProvider', 'DSP_URL', function(RestangularProvider, DSP_URL) {
+    	RestangularProvider.setBaseUrl(DSP_URL);
     }])
 	
 	.config(function(uiGmapGoogleMapApiProvider) {
@@ -177,63 +177,13 @@ angular
               name:'sbAdminApp',
               files:[
               'scripts/controllers/main.js',
-              'scripts/directives/timeline/timeline.js',
               'scripts/directives/notifications/notifications.js',
-              'scripts/directives/chat/chat.js',
-              'scripts/directives/dashboard/stats/stats.js'
+              'scripts/controllers/incidents.js'
               ]
             })
           }
         }
       })
-      .state('portal.form',{
-        templateUrl:'views/form.html',
-        url:'/form'
-    })
-      .state('portal.chart',{
-        templateUrl:'views/chart.html',
-        url:'/chart',
-        controller:'ChartCtrl',
-        resolve: {
-          loadMyFile:function($ocLazyLoad) {
-            return $ocLazyLoad.load({
-              name:'chart.js',
-              files:[
-                'bower_components/angular-chart.js/dist/angular-chart.min.js',
-                'bower_components/angular-chart.js/dist/angular-chart.css'
-              ]
-            }),
-            $ocLazyLoad.load({
-                name:'sbAdminApp',
-                files:['scripts/controllers/chartContoller.js']
-            })
-          }
-        }
-    })
-      .state('portal.table',{
-        templateUrl:'views/table.html',
-        url:'/table'
-    })
-      .state('portal.panels-wells',{
-        templateUrl:'views/ui-elements/panels-wells.html',
-        url:'/panels-wells'
-      })
-      .state('portal.buttons',{
-        templateUrl:'views/ui-elements/buttons.html',
-        url:'/buttons'
-    })
-      .state('portal.typography',{
-       templateUrl:'views/ui-elements/typography.html',
-       url:'/typography'
-   })
-      .state('portal.icons',{
-       templateUrl:'views/ui-elements/icons.html',
-       url:'/icons'
-   })
-      .state('portal.grid',{
-       templateUrl:'views/ui-elements/grid.html',
-       url:'/grid'
-   })
        .state('portal.countries',{
        templateUrl:'views/countries/country.list.html',
        controller:'countryListController',

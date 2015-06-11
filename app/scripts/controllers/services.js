@@ -94,7 +94,7 @@ angular.module('services', ['ngResource'])
   .factory('CountryList', ['$resource', 'DSP_URL',
 	  function($resource, DSP_URL){
 	  	  
-	    return $resource(DSP_URL + '/rest/ml-sql/globalwatch_country?order=countryName&fields=countryID%2CcountryRating%2CcountryName%2CcountryISO%2CcountryISO3&related=data_evacuation_levels_by_country_id', {}, {
+	    return $resource(DSP_URL + '/rest/ml-sql/globalwatch_country?order=countryName&fields=countryID%2CcountryRating%2CcountryName%2CcountryISO%2CcountryISO3&related=data_evacuation_levels_by_country_id,data_reports_by_data_country_v_report', {}, {
 	      query: {
 	      	method:'GET',
 	      	isArray:true,
@@ -183,6 +183,19 @@ angular.module('services', ['ngResource'])
 	    	})
 	    
 	  }])
+	  	  
+	.factory('wpPostsRating', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	    return $resource(DSP_URL + '/rest/wp_posts/_proc/listAlerts', {}, {
+		    
+		    query: {
+		      	method:'POST',
+		      	isArray:false
+		      	}
+		      	
+		      	})
+	    
+	  }])
 	  
 	.factory('Incident', ['$resource', 'DSP_URL',
 	  function($resource, DSP_URL){
@@ -209,6 +222,7 @@ angular.module('services', ['ngResource'])
 		      	})
 	    
 	  }])
+	  
 	  
 	.factory('geoIncident', ['$resource', 'DSP_URL',
 	  function($resource, DSP_URL){
