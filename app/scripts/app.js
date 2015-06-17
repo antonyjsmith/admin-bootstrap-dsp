@@ -178,7 +178,9 @@ angular
               files:[
               'scripts/controllers/main.js',
               'scripts/directives/notifications/notifications.js',
-              'scripts/controllers/incidents.js'
+              'scripts/controllers/incidents.js',
+              'scripts/controllers/maps.js',
+              'scripts/controllers/countries.js'
               ]
             })
           }

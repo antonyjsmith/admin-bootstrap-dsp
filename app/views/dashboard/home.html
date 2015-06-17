@@ -2,12 +2,20 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Dashboard</h1>
-            <div class="panel panel-portal-green" ng-controller="incidentFeedController">
+            <div class="panel panel-portal-green">
 	            <div class="panel-heading">
 	                Incident Map
 	            </div>
-	            <div class="panel-body">
-					<ui-gmap-google-map class="map-dash" center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+	            <div class="panel-body" ng-controller="incidentMapController">
+					<ui-gmap-google-map class="map-dash" center='map.center' zoom='map.zoom'>
+					<ui-gmap-markers models="markers" coords="'self'" events="markersEvents" icon="'icon'">
+					
+			            <ui-gmap-windows show="show">
+			                <div ng-non-bindable>{{title}}</div>
+			            </ui-gmap-windows>
+					
+					</ui-gmap-markers>
+				</ui-gmap-google-map>
 	            </div>
             </div>
         </div>
@@ -41,12 +49,27 @@
 		    </div>
 	    </div>
 	    <div class="col-lg-4">
-		    <div class="panel panel-portal-green">
+		    <div class="panel panel-portal-green" ng-controller="recentUpdatesWidgetController">
 	            <div class="panel-heading">
 	                Recent Updates
 	            </div>
 	            <div class="panel-body">
-	            </div>
+				   	<table class="table">
+					<thead>
+					    <tr>
+					        <th>Country</th>
+					        <th>Date</th>
+					        <th>View</th>
+					    </tr>
+					</thead>
+					<tbody>
+					    <tr ng-repeat="update in updates.record">
+					        <td ng-bind-html="update.countryName | markdown"></td>
+					        <td ng-bind-html="update.lastEdit | markdown"></td>						        
+					        <td><a ng-href="#/portal/countries/overview/{{update.countryID}}">Go</a></td>
+					    </tr>
+					</tbody>
+					</table>	            </div>
 		    </div>
 		</div>
     </div>

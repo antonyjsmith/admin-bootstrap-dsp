@@ -108,6 +108,19 @@ angular.module('services', ['ngResource'])
 	    
 	}])
 	
+  .factory('CountryListShort', ['$resource', 'DSP_URL',
+	  function($resource, DSP_URL){
+	  	  
+	    return $resource(DSP_URL + '/rest/ml-sql/globalwatch_country?order=lastEdit%20DESC&limit=10&fields=countryID%2CcountryRating%2CcountryName%2ClastEdit', {}, {
+	      query: {
+	      	method:'GET',
+	      	isArray:false
+		  	}
+	      
+	    })
+	    
+	}])
+	
 	  /*
 	  	Get data from country table for individual record using the country id grabbed from the URL
 	  */

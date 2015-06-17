@@ -7,11 +7,9 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('MainController', ['$scope', '$position', 'DreamFactory', 'uiGmapGoogleMapApi',
-  				function($scope, $position, DreamFactory, uiGmapGoogleMapApi) {
+  .controller('MainController', ['$scope', '$position', 'DreamFactory',
+  				function($scope, $position, DreamFactory) {
 	      
-		uiGmapGoogleMapApi.then(function(maps) {
-			$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
-	    });	  
+
 	  
   }]);

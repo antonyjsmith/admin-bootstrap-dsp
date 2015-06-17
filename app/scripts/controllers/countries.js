@@ -202,6 +202,15 @@
 		} 	  
 	])
 	
+	.controller('recentUpdatesWidgetController', ['$scope', 'CountryListShort',
+	  function($scope, CountryListShort) {
+								
+			$scope.updates = CountryListShort.query();
+		
+	
+		} 	  
+	])
+	
 	  .controller('reportViewController', ['$scope', 'Restangular',
 	  function($scope, Restangular) {
 	  	
