@@ -10,7 +10,7 @@
     <div class="col-md-4">     
     
         <accordion close-others="oneAtATime">
-        	<accordion-group ng-repeat="categories in advice.record" is-open="status.isFirstOpen">
+        	<accordion-group class="portal-panel" ng-repeat="categories in advice.record" is-open="status.isFirstOpen">
         	<accordion-heading>
 		   			{{categories.name}}
 		   			<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
@@ -24,7 +24,7 @@
     </div>
     
 	<div class="col-lg-8">
-        <div class="panel panel-default">
+        <div class="panel panel-portal-green">
             <div class="panel-heading">
                 {{selectedArticle[0].name}}
             </div>

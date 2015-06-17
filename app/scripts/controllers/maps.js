@@ -1,9 +1,9 @@
 'use strict';
   angular.module('maps', [])	
 	
-	.controller('incidentMapController', ['$scope', '$http', '$timeout', 'Incidents', 'CountryList', 'geoIncident', 'uiGmapGoogleMapApi',
-	  function($scope, $http, $timeout, Incidents, CountryList, geoIncident, uiGmapGoogleMapApi) {
-		  		  		  	
+	.controller('incidentMapController', ['$scope', '$http', '$timeout', 'Incidents', 'CountryList', 'geoIncident', 'uiGmapGoogleMapApi', 'modalService',
+	  function($scope, $http, $timeout, Incidents, CountryList, geoIncident, uiGmapGoogleMapApi, modalService) {
+		  		  		  		  	
             var evacPolyProperties= {
 	                    
 	                    "0": {
@@ -50,22 +50,25 @@
                     
                    };
                    
-                 
-                   
+			$scope.setSearch	= function(bool){
+				
+					$scope.circle.visible = bool;
+				
+				};
                    
             $scope.incidentParams 				= new Object({});
-		  	$scope.incidentParams.count 		= 20;
-            $scope.incidentParams.dateBefore 	= new Date();
-            $scope.incidentParams.dateAfter		= null;
+		  	$scope.incidentParams.count 		= 200;
+            $scope.incidentParams.dateBefore 	= moment().format("YYYY-MM-DD");
+            $scope.incidentParams.dateAfter		= moment().subtract(30, 'days').format("YYYY-MM-DD");
                    
             $scope.loading = false;
             
             //Open or close datepicker
-			$scope.open = function($event) {
+			$scope.open = function($event,opened) {
 				$event.preventDefault();
 				$event.stopPropagation();
 				
-				$scope.opened = true;
+				$scope[opened] = true;
 			};
                    
 		  	$scope.markers = [];
@@ -77,7 +80,19 @@
 		  	var populateMarkerModel = function(input){
 			  	
 			  		//$scope.markers.length = 0;
-
+			  		
+			  		if (input.length == 0){
+				  	
+					  	var modalOptions = {
+				            actionButtonText: 'Ok',
+				            headerText: 'No results',
+				            bodyText: 'Try broadening your search parameters'
+				        };
+				
+				        modalService.showModal({}, modalOptions);	
+				  		
+			  		}
+			  		
 					_.each(input, function (incident){
 						
 						//set variables and convert string to integer
@@ -121,11 +136,8 @@
 						
 			$scope.updateIncidents = function (){
 				
-				var a = $scope.incidentParams.dateBefore; // today!
-			  	var b = $scope.incidentParams.dateAfter; // today too!
-						
-				var fromDate = a.toISOString(a.setDate(a.getDate())).slice(0, 19)
-				var toDate = b.toISOString(b.setDate(b.getDate())).slice(0, 19)
+				var fromDate = moment($scope.incidentParams.dateBefore).format("YYYY-MM-DD");
+				var toDate = moment($scope.incidentParams.dateAfter).format("YYYY-MM-DD");
 								
 				$scope.loading = true;
 				
@@ -342,9 +354,9 @@
 	                },
 	                geodesic: true, // optional: defaults to false
 	                draggable: true, // optional: defaults to false
-	                clickable: true, // optional: defaults to true
+	                clickable: false, // optional: defaults to true
 	                editable: true, // optional: defaults to false
-	                visible: true, // optional: defaults to true
+	                visible: false, // optional: defaults to true
 	                events:{
 			            dragend: function (gCircle, eventName, circleModel) {
 				          $scope.circle.center = circleModel.center;
@@ -361,11 +373,8 @@
 				
 			$scope.updateGeoIncidents = function (){
 				
-				var a = $scope.incidentParams.dateBefore; // today!
-			  	var b = $scope.incidentParams.dateAfter; // today too!
-						
-				var fromDate = a.toISOString(a.setDate(a.getDate())).slice(0, 19)
-				var toDate = b.toISOString(b.setDate(b.getDate())).slice(0, 19)
+				var fromDate = moment($scope.incidentParams.dateBefore);
+				var toDate = moment($scope.incidentParams.dateAfter);
 				
 				$scope.loading = true;
 				
@@ -418,6 +427,18 @@
 			}
 			
 		  	var populateGeoMarkerModel = function(input){
+			  	
+			  		if (input.length == 0){
+				  	
+					  	var modalOptions = {
+				            actionButtonText: 'Ok',
+				            headerText: 'No results',
+				            bodyText: 'Try broadening your search parameters'
+				        };
+				
+				        modalService.showModal({}, modalOptions);	
+				  		
+			  		}
 			  				  	
 			  		$scope.markers.length = 0;
 			  					  		

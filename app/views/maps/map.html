@@ -14,48 +14,101 @@
 	            </div>
 	            <div class="panel-body">
 		            
-				<p>Layers</p>
-			    <div class="btn-group">
-			        <label class="btn btn-success" ng-model="layerModel" btn-radio="0" ng-click="switchLayer(0)">Off</label>
-			        <label class="btn btn-success" ng-model="layerModel" btn-radio="1" ng-click="switchLayer(1)">Risk</label>
-			        <label class="btn btn-success" ng-model="layerModel" btn-radio="2" ng-click="switchLayer(2)">Evacuation</label>
-			    </div>
-			    			    		    
-			    <label>Date From</label>
-	            <p class="input-group">
-	              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateBefore" is-open="opened" max-date="maxDate" ng-required="true" close-text="Close" />
-	              <span class="input-group-btn">
-	                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-	              </span>
-	            </p>
-	            
-				<label>Date to [must be earlier than Date From]</label>
-	            <p class="input-group">
-	              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateAfter" is-open="opened" max-date="maxDate" ng-required="true" close-text="Close" />
-	              <span class="input-group-btn">
-	                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-	              </span>
-	            </p>
-	           
-	           <label>Max Results</label>
-	            <p>
-		            <input type="number" ng-model="incidentParams.count" class="form-control">
-	            </p>
-	            
-	        	<!--    <button type="button" class="btn btn-primary" ng-click="updateIncidents()">
-					Update
-				</button> -->
-			    <button type="button" class="btn btn-primary" ng-click="updateGeoIncidents()">
-					Update Incidents
-				</button>
-			    <button type="button" class="btn btn-primary" ng-click="clearMarkers()">
-					Clear Incidents
-				</button>
-	
-			    <span ng-show="loading">
-					    <p>Loading</p>
-				    	<i class="fa fa-spinner fa-spin fa-2x"></i>
-				</span>
+			        <div class="form-group">
+						<p>Layers</p>
+					    <div class="btn-group">
+					        <label class="btn btn-success" ng-model="layerModel" btn-radio="0" ng-click="switchLayer(0)">Off</label>
+					        <label class="btn btn-success" ng-model="layerModel" btn-radio="1" ng-click="switchLayer(1)">Risk</label>
+					        <label class="btn btn-success" ng-model="layerModel" btn-radio="2" ng-click="switchLayer(2)">Evacuation</label>
+					    </div>
+			        </div>
+			        <p>Search</p>
+			        <tabset>
+					    <tab heading="Date" select="setSearch(false)">
+						    <div class="form-group">		    		    
+							    <label>Date From</label>
+					            <p class="input-group">
+					              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateBefore" is-open="opened1" max-date="maxDate" ng-required="true" close-text="Close" />
+					              <span class="input-group-btn">
+					                <button type="button" class="btn btn-default" ng-click="open($event,'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
+					              </span>
+					            </p>
+						    </div>
+						    
+						    <div class="form-group">		    		    
+								<label>Date to [must be earlier than Date From]</label>
+					            <p class="input-group">
+					              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateAfter" is-open="opened2" max-date="maxDate" ng-required="true" close-text="Close" />
+					              <span class="input-group-btn">
+					                <button type="button" class="btn btn-default" ng-click="open($event,'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
+					              </span>
+					            </p>
+						    </div>
+				           
+				           	<div class="form-group">		    		    
+					           	<label>Max Results</label>
+					            <p>
+						            <input type="number" ng-model="incidentParams.count" class="form-control">
+					            </p>
+				           	</div>
+				        	<!--    <button type="button" class="btn btn-primary" ng-click="updateIncidents()">
+								Update
+							</button> -->
+							
+							<div class="form-group">
+							    <button type="button" class="btn btn-primary" ng-click="updateIncidents()">
+									Update Incidents
+								</button>
+							</div>
+					    </tab>
+					    <tab heading="Location" select="setSearch(true)">
+					    	<p>Reposition and resize the circle to restrict results to a specific geographic area</p>
+						    <div class="form-group">		    		    
+							    <label>Date From</label>
+					            <p class="input-group">
+					              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateBefore" is-open="opened1" max-date="maxDate" ng-required="true" close-text="Close" />
+					              <span class="input-group-btn">
+					                <button type="button" class="btn btn-default" ng-click="open($event,'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
+					              </span>
+					            </p>
+						    </div>
+						    
+						    <div class="form-group">		    		    
+								<label>Date to [must be earlier than Date From]</label>
+					            <p class="input-group">
+					              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateAfter" is-open="opened2" max-date="maxDate" ng-required="true" close-text="Close" />
+					              <span class="input-group-btn">
+					                <button type="button" class="btn btn-default" ng-click="open($event,'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
+					              </span>
+					            </p>
+						    </div>
+				           
+				           	<div class="form-group">		    		    
+					           	<label>Max Results</label>
+					            <p>
+						            <input type="number" ng-model="incidentParams.count" class="form-control">
+					            </p>
+				           	</div>
+				        	<!--    <button type="button" class="btn btn-primary" ng-click="updateIncidents()">
+								Update
+							</button> -->
+							
+							<div class="form-group">
+							    <button type="button" class="btn btn-primary" ng-click="updateGeoIncidents()">
+									Update Incidents
+								</button>
+							</div>
+						</tab>
+					</tabset>
+				    <div class="form-group">		    		    
+					    <button type="button" class="btn btn-primary" ng-click="clearMarkers()">
+							Clear Incidents
+						</button>
+					</div>
+				    <span ng-show="loading">
+						    <p>Loading</p>
+					    	<i class="fa fa-spinner fa-spin fa-2x"></i>
+					</span>
 	
 			    
 	            </div>

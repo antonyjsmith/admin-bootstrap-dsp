@@ -363,6 +363,12 @@ body {
     color: #df8a13;
 }
 
+.portal-panel .panel-heading{
+	border-color: #55c5a9;
+    color: #fff;
+    background-color: #55c5a9;
+}
+
 .threat-1 .panel-heading{
 	border-color: #3BAC54;
     color: #fff;

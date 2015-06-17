@@ -95,3 +95,17 @@ background-color: #99DDCD;
   color: #ffffff;
   text-decoration: none;
 }
+
+.nav-tabs>li>a {
+  color: #fff;
+  border: 1px solid #ddd;
+  background-color: #ddd;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  color: #fff;
+  cursor: default;
+  background-color: #55c5a9;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+}

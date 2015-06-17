@@ -29,7 +29,8 @@
     "angular-google-maps": "~2.1.1",
     "angular-local-storage": "~0.2.0",
     "restangular": "~1.5.1",
-    "google-maps-api-addons": "~1.0.0"
+    "google-maps-api-addons": "~1.0.0",
+    "moment": "~2.10.3"
   },
   "appPath": "app"
 }
