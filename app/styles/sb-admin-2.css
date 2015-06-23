@@ -447,3 +447,7 @@ map, div[map] {
 	display:block;
 	height: 400px
 }
+
+.intl-tel-input {
+  display: block;
+}

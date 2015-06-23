@@ -28,7 +28,8 @@ angular
     'uiGmapgoogle-maps',
     'LocalStorageModule',
     'restangular',
-    'modal'
+    'modal',
+    'internationalPhoneNumber'
   ])
   
 	.constant('DSP_URL', 'https://core.maxwelllucas.com')
@@ -185,6 +186,20 @@ angular
             })
           }
         }
+      })
+      .state('portal.user',{
+	  templateUrl:'views/pages/user.html',
+	  controller:'userProfileCtrl',
+	   url:'/user',
+	    resolve: {
+	      loadMyFile:function($ocLazyLoad) {
+	        return $ocLazyLoad.load({
+				name:'userData',
+				files:["scripts/controllers/userData.js"]
+	        })
+	      }
+	    }
+	  
       })
        .state('portal.countries',{
        templateUrl:'views/countries/country.list.html',

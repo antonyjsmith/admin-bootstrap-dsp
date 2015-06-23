@@ -30,7 +30,12 @@
     "angular-local-storage": "~0.2.0",
     "restangular": "~1.5.1",
     "google-maps-api-addons": "~1.0.0",
-    "moment": "~2.10.3"
+    "moment": "~2.10.3",
+    "intl-tel-input": "~6.0.0",
+    "international-phone-number": "~0.0.7"
   },
-  "appPath": "app"
+  "appPath": "app",
+  "resolutions": {
+    "intl-tel-input": "~6.0.0"
+  }
 }
