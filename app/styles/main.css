@@ -76,36 +76,3 @@ body {
     border-bottom: 0;
   }
 }
-
-.nav > li.first > a {
-	border-top: solid 1px #767676;
-}
-
-.nav > li.active > a {
-text-decoration: none;
-background-color: #55c5a9;
-}
-
-.nav > li > a:hover {
-text-decoration: none;
-background-color: #99DDCD;
-}
-
-.nav > li > a {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.nav-tabs>li>a {
-  color: #fff;
-  border: 1px solid #ddd;
-  background-color: #ddd;
-}
-
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-  color: #fff;
-  cursor: default;
-  background-color: #55c5a9;
-  border: 1px solid #ddd;
-  border-bottom-color: transparent;
-}

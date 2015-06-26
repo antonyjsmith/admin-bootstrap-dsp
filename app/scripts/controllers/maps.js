@@ -1,9 +1,9 @@
 'use strict';
   angular.module('maps', [])	
 	
-	.controller('incidentMapController', ['$scope', '$http', '$timeout', 'Incidents', 'CountryList', 'geoIncident', 'uiGmapGoogleMapApi', 'modalService',
-	  function($scope, $http, $timeout, Incidents, CountryList, geoIncident, uiGmapGoogleMapApi, modalService) {
-		  		  		  		  	
+	.controller('incidentMapController', ['$scope', '$http', '$timeout', 'Incidents', 'CountryList', 'geoIncident', 'uiGmapGoogleMapApi', 'modalService', 'uiGmapLogger',
+	  function($scope, $http, $timeout, Incidents, CountryList, geoIncident, uiGmapGoogleMapApi, modalService, uiGmapLogger) {
+		  		  		  		  		  	
             var evacPolyProperties= {
 	                    
 	                    "0": {
@@ -67,8 +67,9 @@
 			$scope.open = function($event,opened) {
 				$event.preventDefault();
 				$event.stopPropagation();
-				
+								
 				$scope[opened] = true;
+								
 			};
                    
 		  	$scope.markers = [];
@@ -155,6 +156,7 @@
 			  $scope.markersEvents = {
 			    click: function (gMarker, eventName, model) {
 			      console.log(model);
+			      console.log(gMarker);
 			      model.show = !model.show;
 			    }
 			  };
@@ -471,7 +473,7 @@
 									latitude: lat,
 									longitude: lng,
 									id: incident.ID,
-									title: '<b><p>' + incident.title + ' - Incident Rating: ' + incident.incident_rating + '</p></b>' + incident.excerpt + '<a href="/#/portal/incident/feed/' + incident.ID + '">More...</a>',
+									title: '<b><p>' + incident.title + ' - Incident Rating: ' + incident.incident_rating + '</p></b><p>' + incident.excerpt + '</p><a href="/#/portal/incident/feed/' + incident.ID + '">More...</a>',
 									icon: "assets/level-" + getRating(incident.incident_rating) + ".svg"
 								
 								};
