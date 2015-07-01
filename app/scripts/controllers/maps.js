@@ -63,15 +63,18 @@
                    
             $scope.loading = false;
             
-            //Open or close datepicker
-			$scope.open = function($event,opened) {
-				$event.preventDefault();
-				$event.stopPropagation();
-								
-				$scope[opened] = true;
-								
+            //Open or close datepicker			
+			$scope.calendar = {
+			    opened: {},
+			    dateFormat: 'MM/dd/yyyy',
+			    dateOptions: {},
+			    open: function($event, which) {
+			        $event.preventDefault();
+			        $event.stopPropagation();
+			        $scope.calendar.opened[which] = !$scope.calendar.opened[which];
+			    } 
 			};
-                   
+			                     
 		  	$scope.markers = [];
 		  	
 		  	//Set max date in date picker

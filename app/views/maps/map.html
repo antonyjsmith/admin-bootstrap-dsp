@@ -12,8 +12,7 @@
 	            <div class="panel-heading">
 	                Options
 	            </div>
-	            <div class="panel-body">
-		            
+	            <div class="panel-body">		            
 			        <div class="form-group">
 						<p>Layers</p>
 					    <div class="btn-group">
@@ -28,9 +27,9 @@
 						    <div class="form-group">		    		    
 							    <label>Date From</label>
 					            <p class="input-group">
-					              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateBefore" is-open="opened1" max-date="maxDate" ng-required="true" close-text="Close" />
+					              <input type="text" class="form-control" datepicker-popup="{{calendar.dateFormat}}" ng-model="incidentParams.dateBefore" is-open="calendar.opened.before" min-date="minDate" max-date="maxDate" datepicker-options="calendar.dateOptions" ng-required="true" close-text="Close"/>
 					              <span class="input-group-btn">
-					                <button type="button" class="btn btn-default" ng-click="open($event,'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
+					                <button type="button" class="btn btn-default" ng-click="calendar.open($event, 'before')"><i class="glyphicon glyphicon-calendar"></i></button>
 					              </span>
 					            </p>
 						    </div>
@@ -38,9 +37,9 @@
 						    <div class="form-group">		    		    
 								<label>Date to [must be earlier than Date From]</label>
 					            <p class="input-group">
-					              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateAfter" is-open="opened2" max-date="maxDate" ng-required="true" close-text="Close" />
+					              <input type="text" class="form-control" datepicker-popup="{{calendar.dateFormat}}" ng-model="incidentParams.dateAfter" is-open="calendar.opened.after" min-date="minDate" max-date="maxDate" datepicker-options="calendar.dateOptions" ng-required="true" close-text="Close" />
 					              <span class="input-group-btn">
-					                <button type="button" class="btn btn-default" ng-click="open($event,'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
+					                <button type="button" class="btn btn-default" ng-click="calendar.open($event, 'after')"><i class="glyphicon glyphicon-calendar"></i></button>
 					              </span>
 					            </p>
 						    </div>
@@ -66,7 +65,7 @@
 						    <div class="form-group">		    		    
 							    <label>Date From</label>
 					            <p class="input-group">
-					              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateBefore" is-open="opened1" max-date="maxDate" ng-required="true" close-text="Close" />
+					              <input type="text" class="form-control" ng-model="incidentParams.dateBefore" is-open="opened1" max-date="maxDate" ng-required="true" close-text="Close" />
 					              <span class="input-group-btn">
 					                <button type="button" class="btn btn-default" ng-click="open($event,'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
 					              </span>
@@ -76,7 +75,7 @@
 						    <div class="form-group">		    		    
 								<label>Date to [must be earlier than Date From]</label>
 					            <p class="input-group">
-					              <input type="text" class="form-control" datepicker-popup="" ng-model="incidentParams.dateAfter" is-open="opened2" max-date="maxDate" ng-required="true" close-text="Close" />
+					              <input type="text" class="form-control" ng-model="incidentParams.dateAfter" is-open="opened2" max-date="maxDate" ng-required="true" close-text="Close" />
 					              <span class="input-group-btn">
 					                <button type="button" class="btn btn-default" ng-click="open($event,'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
 					              </span>
