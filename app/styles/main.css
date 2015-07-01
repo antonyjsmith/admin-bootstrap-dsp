@@ -42,9 +42,18 @@ body {
 
 /* Main marketing message and sign up button */
 .jumbotron {
+  margin-top: -50px;
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
 }
+
+@media (max-width: 768px) {
+  .jumbotron {
+    margin-top: -100px;
+  }
+}
+
+
 .jumbotron .btn {
   font-size: 21px;
   padding: 14px 24px;
