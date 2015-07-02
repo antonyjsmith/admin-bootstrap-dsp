@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">{{countryData.countryName}}</h1>        
+        <h1 class="page-header"><span class="flag-icon flag-icon-{{countryData.countryISO | lowercase}}"></span> {{countryData.countryName}}</h1>        
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -41,7 +41,8 @@
 	        <label class="btn btn-default" ui-sref="portal.countryOverview.profile" ng-model="radioModel" btn-radio="'Profile'" uncheckable>Profile</label>
 	        <label class="btn btn-default" ui-sref="portal.countryOverview.map" ng-model="radioModel" btn-radio="'Map'" uncheckable>Map</label>
 	    <!--    <label class="btn btn-default" ui-sref="portal.countryOverview.threat" ng-model="radioModel" btn-radio="'Threat'" uncheckable>Threat</label> -->
-	        <label class="btn btn-default" ui-sref="portal.countryOverview.evacuation" ng-model="radioModel" btn-radio="'Evacuation'" uncheckable>Evacuation</label>
+	        <label class="btn btn-default" ui-sref="portal.countryOverview.evacuation" ng-model="radioModel" btn-radio="'Evacuation'" uncheckable>Evacuation Report</label>
+	        <label class="btn btn-default" ui-sref="portal.countryOverview.actors" ng-model="radioModel" btn-radio="'Actors'" uncheckable>Actors</label>
 	        <label class="btn btn-default" ui-sref="portal.countryOverview.incidents" ng-model="radioModel" btn-radio="'Incidents'" uncheckable>Incidents</label>
 	    </div>
 	</div>

@@ -32,7 +32,8 @@
     "google-maps-api-addons": "~1.0.0",
     "moment": "~2.10.3",
     "intl-tel-input": "~6.0.0",
-    "international-phone-number": "~0.0.7"
+    "international-phone-number": "~0.0.7",
+    "flag-icon-css": "~0.7.1"
   },
   "appPath": "app",
   "resolutions": {
