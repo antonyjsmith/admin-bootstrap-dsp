@@ -232,6 +232,11 @@ angular
 		url:'/profile'
 	})
 	
+	.state('portal.countryOverview.actors',{
+		templateUrl:'views/countries/country.actors.html',
+		url:'/actors'
+	})
+	
 	.state('portal.countryOverview.map',{
 		templateUrl:'views/countries/country.map.html',
 		controller:'countryMapController',

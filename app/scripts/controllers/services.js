@@ -162,7 +162,7 @@ angular.module('services', ['ngResource'])
 			query: {
 				method:'GET',
 				params:{
-					related : 'data_evacuation_levels_by_country_id,globalwatch_country_entries_by_entryCountryID,iprofile_vaccinations_by_countryISO,data_reports_by_data_country_v_report'
+					related : 'data_evacuation_levels_by_country_id,globalwatch_country_entries_by_entryCountryID,data_reports_by_data_country_v_report,data_actors_by_data_actor_v_country'
 				},
 				isArray:false
 			}

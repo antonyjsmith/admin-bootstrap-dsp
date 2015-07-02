@@ -1,0 +1,15 @@
+    <div ui-view class="col-lg-12">
+                	    
+        <div class="panel panel-portal-green" ng-repeat="entry in countryData.data_actors_by_data_actor_v_country">
+            <div class="panel-heading">
+                <a name="actor{{entry.id}}">{{entry.name}}</a>
+            </div>
+            <div class="panel-body">
+	            <h4>Summary</h4>
+	            <p ng-bind-html="entry.summary | markdown"></p>
+	            <p ng-bind-html="entry.content | markdown"></p>
+            </div>
+        </div>
+        
+    </div>
+    <!-- /.col-lg-12 -->
