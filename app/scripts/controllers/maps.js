@@ -1,8 +1,8 @@
 'use strict';
   angular.module('maps', [])	
 	
-	.controller('incidentMapController', ['$scope', '$http', '$timeout', 'Incidents', 'CountryList', 'geoIncident', 'uiGmapGoogleMapApi', 'modalService', 'uiGmapLogger',
-	  function($scope, $http, $timeout, Incidents, CountryList, geoIncident, uiGmapGoogleMapApi, modalService, uiGmapLogger) {
+	.controller('incidentMapController', ['$scope', '$http', '$timeout', '$location', 'Incidents', 'CountryList', 'geoIncident', 'uiGmapGoogleMapApi', 'modalService', 'Restangular',
+	  function($scope, $http, $timeout, $location, Incidents, CountryList, geoIncident, uiGmapGoogleMapApi, modalService, Restangular) {
 		  		  		  		  		  	
             var evacPolyProperties= {
 	                    
@@ -158,8 +158,8 @@
 			
 			  $scope.markersEvents = {
 			    click: function (gMarker, eventName, model) {
-			      console.log(model);
-			      console.log(gMarker);
+			      //console.log(model);
+			      //console.log(gMarker);
 			      model.show = !model.show;
 			    }
 			  };
@@ -317,6 +317,11 @@
 		            click: function (gPoly, eventName, polyModel) {
 		              //window.alert("Poly Clicked: id:" + polyModel.id + ' ' + JSON.stringify(polyModel.path));
 		              console.log(polyModel.id);
+		                var resource = Restangular.all('rest/ml-sql/globalwatch_country')
+				
+						resource.customGET(["?filter=countryISO3%20%3D%20'" +polyModel.id+ "'"]).then(function(response){
+							$location.path('/portal/countries/overview/' +response.record[0].countryID);
+						});
 		            }
 		          }
 		        };
