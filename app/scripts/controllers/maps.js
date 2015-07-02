@@ -257,26 +257,34 @@
 			  	
 			});
 			
-			//This by far the most elegant method, due to a bug in uiGmapGoogleMapApi visibility cannot be bound to a model so this a nasty workaround
+			//Far from the most elegant method, due to a bug in uiGmapGoogleMapApi visibility cannot be bound to a model so this a nasty workaround
 		  	  	
 		  	$scope.layerModel = 0;
-		
+		  	$scope.threatLegend = false;
+			$scope.evacLegend = false;
+		  			
 		  	$scope.switchLayer = function (layer){
 		  		
 		  		if (layer == 0) {
 			  		
 			  		$scope.map.visible = false;
 			  		$scope.map2.visible = false;
+			  		$scope.threatLegend = false;
+			  		$scope.evacLegend = false;
 			  		
 		  		} else if (layer == 1) {
 			  		
 			  		$scope.map.visible = true;
 			  		$scope.map2.visible = false;
+			  		$scope.evacLegend = true;
+			  		$scope.threatLegend = false;
 			  		
 		  		} else if (layer == 2) {
 			  	
 			  		$scope.map.visible = false;
 			  		$scope.map2.visible = true;
+			  		$scope.evacLegend = false;
+			  		$scope.threatLegend = true;
 			  		
 		  		};
 			  	
@@ -501,5 +509,24 @@
 		  	};	       						
 					  
 	  }])
+	  
+    .controller('legendCtrl', ['$scope', 'Restangular',
+		function($scope, Restangular) {
+
+			var resourceRatings = Restangular.all('rest/db/rating_terms')
+					  			  					
+			resourceRatings.customGET(["?filter=type='evac_level'"]).then(function(data){
+				
+				$scope.evacData = data.record;
+						  		
+			});
+					  			  			  					
+			resourceRatings.customGET(["?filter=type='risk_level'"]).then(function(data){
+					
+				$scope.threatData = data.record;
+							  		
+	  		});
+
+    }])
 	  
 	;

@@ -1,0 +1,13 @@
+<div id="legend">
+			    		    			
+			<h4>Legend</h4>
+									
+			<div ng-repeat="rating in threatData" class="btn-group btn-group-justified" role="group">
+			  <div class="btn-group" role="group">
+			   <button type="button" class="btn btn-assistance-threat-{{rating.value}} btn-gap btn-xs"
+			   		popover-placement="right" popover="{{rating.body}}" popover-append-to-body="true">
+			   	<!-- <i class="fa fa-info-circle fa-lg"></i> --> {{rating.title}}</button>
+			  </div>
+			</div>
+									
+</div>

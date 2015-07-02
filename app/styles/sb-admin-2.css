@@ -362,9 +362,9 @@ body {
 }
 
 .portal-panel .panel-heading{
-	border-color: #55c5a9;
-    color: #fff;
-    background-color: #55c5a9;
+	border-color: #f5f5f5;
+    color: #333;
+    background-color: #f5f5f5;
 }
 
 .threat-1 .panel-heading{
@@ -448,4 +448,133 @@ map, div[map] {
 
 .intl-tel-input {
   display: block;
+}
+
+#legend {
+	background: white;
+	padding: 10px;
+	margin-left: 15px;
+	width: 150px;
+}
+
+.btn-gap{
+	margin-bottom: 5px;
+}
+
+.bg-evac-0 {
+  background-color: #006699;
+}
+.btn-assistance-evac-0 {
+  color: #ffffff;
+  background-color: #006699;
+  border-color: #006699;
+  text-align: left;
+}
+.btn-assistance-evac-0:hover,
+.btn-assistance-evac-0:focus {
+  color: #ffffff;
+}
+.bg-evac-1 {
+  background-color: #00cc00;
+}
+.btn-assistance-evac-1 {
+  color: #ffffff;
+  background-color: #00cc00;
+  border-color: #00cc00;
+  text-align: left;
+}
+.btn-assistance-evac-1:hover,
+.btn-assistance-evac-1:focus {
+  color: #ffffff;
+}
+.bg-evac-2 {
+  background-color: #ffd700;
+}
+.btn-assistance-evac-2 {
+  color: #ffffff;
+  background-color: #ffd700;
+  border-color: #ffd700;
+  text-align: left;
+}
+.btn-assistance-evac-2:hover,
+.btn-assistance-evac-2:focus {
+  color: #ffffff;
+}
+.bg-evac-3 {
+  background-color: #cc0066;
+}
+.btn-assistance-evac-3 {
+  color: #ffffff;
+  background-color: #cc0066;
+  border-color: #cc0066;
+  text-align: left;
+}
+.btn-assistance-evac-3:hover,
+.btn-assistance-evac-3:focus {
+  color: #ffffff;
+}
+.bg-evac-4 {
+  background-color: #ff0000;
+}
+.btn-assistance-evac-4 {
+  color: #ffffff;
+  background-color: #ff0000;
+  border-color: #ff0000;
+  text-align: left;
+}
+.btn-assistance-evac-4:hover,
+.btn-assistance-evac-4:focus {
+  color: #ffffff;
+}
+.bg-threat-1 {
+  background-color: #3bac54;
+}
+.btn-assistance-threat-1 {
+  color: #ffffff;
+  background-color: #3bac54;
+  border-color: #3bac54;
+  text-align: left;
+}
+.btn-assistance-threat-1:hover,
+.btn-assistance-threat-1:focus {
+  color: #ffffff;
+}
+.bg-threat-2 {
+  background-color: #e2ff34;
+}
+.btn-assistance-threat-2 {
+  color: #ffffff;
+  background-color: #e2ff34;
+  border-color: #e2ff34;
+  text-align: left;
+}
+.btn-assistance-threat-2:hover,
+.btn-assistance-threat-2:focus {
+  color: #ffffff;
+}
+.bg-threat-3 {
+  background-color: #ffc307;
+}
+.btn-assistance-threat-3 {
+  color: #ffffff;
+  background-color: #ffc307;
+  border-color: #ffc307;
+  text-align: left;
+}
+.btn-assistance-threat-3:hover,
+.btn-assistance-threat-3:focus {
+  color: #ffffff;
+}
+.bg-threat-4 {
+  background-color: #ff0000;
+}
+.btn-assistance-threat-4 {
+  color: #ffffff;
+  background-color: #ff0000;
+  border-color: #ff0000;
+  text-align: left;
+}
+.btn-assistance-threat-4:hover,
+.btn-assistance-threat-4:focus {
+  color: #ffffff;
 }
