@@ -113,6 +113,12 @@ angular
         	controller: 'passwordController'
     	})
     	
+    	.state('reset',{
+			url:'/reset',
+        	templateUrl:'views/pages/reset.html',
+        	controller: 'passwordController'
+    	})    	
+    	
     	.state('error404',{
 			url:'/404',
         	templateUrl:'views/404.html',
