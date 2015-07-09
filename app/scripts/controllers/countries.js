@@ -63,14 +63,16 @@
 	  		
 	  		$scope.countryData.$promise.then(function (countryData){
 		  		
-	  			$scope.evacRating = getRatingData('evac_level',countryData.countryRating);
+		  		//console.log(_.last(countryData.data_evacuation_levels_by_country_id).level);
+		  		
+	  			$scope.evacRating = getRatingData('evac_level',_.last(countryData.data_evacuation_levels_by_country_id).level);
 	  			$scope.riskRating = getRatingData('risk_level',countryData.countryRating);
 	  			
 		  		
 	  		});
 	  					
-			var currEvacLevel = _.last($scope.countryData.data_evacuation_levels_by_country_id);
-						
+			//var currEvacLevel = _.last($scope.countryData.data_evacuation_levels_by_country_id);
+									
 			var getRatingData = function(type,value){
 								
 				return riskTerms.query({Type : type, Value : value});
