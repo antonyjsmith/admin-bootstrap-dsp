@@ -8,11 +8,11 @@
 	                    
 	                    "0": {
 	                            name: 'Monitoring',
-	                            colors: [ '#00CC00' ]
+	                            colors: [ '#006699' ]
 	                    },            
 	                    "1": {
 	                            name: 'Increased Monitoring',
-	                            colors: [ '#006699' ]
+	                            colors: [ '#00CC00' ]
 	                    },
 	                    "2": {
 	                            name: 'Warning',
@@ -346,7 +346,7 @@
 		          polyEvents: {
 		            click: function (gPoly, eventName, polyModel) {
 		              //window.alert("Poly Clicked: id:" + polyModel.id + ' ' + JSON.stringify(polyModel.path));
-		              console.log(polyModel.id);
+		              console.log(polyModel);
 		            }
 		          }
 		        };			 
