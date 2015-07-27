@@ -105,6 +105,10 @@ body {
     left: auto;
 }
 
+.main-logo {
+  padding-top: 0;  
+}
+
 .sidebar .sidebar-nav.navbar-collapse {
     padding-right: 0;
     padding-left: 0;
