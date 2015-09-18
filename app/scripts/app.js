@@ -29,46 +29,47 @@ angular
     'LocalStorageModule',
     'restangular',
     'modal',
-    'internationalPhoneNumber'
+    'internationalPhoneNumber',
+    'nemLogging'
   ])
-  
+
 	.constant('DSP_URL', 'https://core.maxwelllucas.com')
-	.constant('DSP_API_KEY', 'dfauth')  
+	.constant('DSP_API_KEY', 'dfauth')
 	.config(['$httpProvider', 'DSP_API_KEY', function($httpProvider, DSP_API_KEY) {
 			$httpProvider.defaults.headers.common['X-DreamFactory-Application-Name'] = DSP_API_KEY;
 	}])
-	
+
 	//Watch for dreamfactory errors and broadcast and exceptions error.js is listening!!
-	
+
 	.config(['$provide', function($provide) {
 		$provide.decorator('$exceptionHandler', ['$delegate', '$injector', function($delegate, $injector) {
 		    return function(exception) {
-		    
+
 		    if (exception.provider === 'dreamfactory') {
-	
+
 	            $injector.invoke(['$rootScope', function($rootScope) {
-	
+
 	                $rootScope.$broadcast('error:dreamfactory', exception);
 	            }]);
-	            
+
 			} else {
-		        
+
 		        return $delegate(exception);
-		        
+
 		        }
 		    }
 		}])
 	}])
-	
+
 	.config(['$httpProvider',function($httpProvider) {
 	    $httpProvider.interceptors.push('authHttpResponseInterceptor');
-	    
+
 	}])
-	
+
     .config(['RestangularProvider', 'DSP_URL', function(RestangularProvider, DSP_URL) {
     	RestangularProvider.setBaseUrl(DSP_URL);
     }])
-	
+
 	.config(function(uiGmapGoogleMapApiProvider) {
 	    uiGmapGoogleMapApiProvider.configure({
 	        //    key: 'your api key',
@@ -76,10 +77,10 @@ angular
 	        libraries: 'weather,geometry,visualization'
 	    });
 	})
-  
+
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',
   	function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
-    
+
     $ocLazyLoadProvider.config({
       debug:false,
       events:true
@@ -88,57 +89,57 @@ angular
     $urlRouterProvider.otherwise('/login');
 
     $stateProvider
-    
+
 		.state('login',{
 			url:'/login',
         	templateUrl:'views/pages/login.html',
         	controller: 'loginController'
     	})
-    	
+
     	.state('logout',{
 			url:'/logout',
         	templateUrl:'views/pages/logout.html',
         	controller: 'logoutController'
     	})
-    	
+
     	.state('register',{
 			url:'/register',
         	templateUrl:'views/pages/register.html',
         	controller: 'registerController'
     	})
-    	
+
     	.state('forgot',{
 			url:'/forgot',
         	templateUrl:'views/pages/forgot.html',
         	controller: 'passwordController'
     	})
-    	
+
     	.state('reset',{
 			url:'/reset',
         	templateUrl:'views/pages/reset.html',
         	controller: 'passwordController'
-    	})    	
-    	
+    	})
+
     	.state('error404',{
 			url:'/404',
         	templateUrl:'views/404.html',
     	})
-    	
+
     	.state('error401',{
 			url:'/401',
         	templateUrl:'views/401.html',
     	})
-    	
+
     	.state('error403',{
 			url:'/403',
         	templateUrl:'views/403.html',
     	})
-    	
+
     	.state('error500',{
 			url:'/500',
         	templateUrl:'views/500.html',
     	})
-    
+
       .state('portal', {
         url:'/portal',
         templateUrl: 'views/dashboard/main.html',
@@ -170,7 +171,7 @@ angular
                 {
                   name:'ngTouch',
                   files:['bower_components/angular-touch/angular-touch.js']
-                })            
+                })
             }
         }
     })
@@ -205,7 +206,7 @@ angular
 	        })
 	      }
 	    }
-	  
+
       })
        .state('portal.countries',{
        templateUrl:'views/countries/country.list.html',
@@ -237,18 +238,18 @@ angular
 		templateUrl:'views/countries/country.profile.html',
 		url:'/profile'
 	})
-	
+
 	.state('portal.countryOverview.actors',{
 		templateUrl:'views/countries/country.actors.html',
 		url:'/actors'
 	})
-	
+
 	.state('portal.countryOverview.map',{
 		templateUrl:'views/countries/country.map.html',
 		controller:'countryMapController',
 		url:'/map'
 	})
-	
+
 	.state('portal.countryOverview.threat',{
 		templateUrl:'views/countries/country.threat.html',
 		url:'/threat'
@@ -258,13 +259,13 @@ angular
 		controller:'reportViewController',
 		url:'/evacuation'
 	})
-	
+
 	.state('portal.countryOverview.incidents',{
 		templateUrl:'views/countries/country.incidents.html',
 		controller: 'incidentCountryWidgetController',
 		url:'/incidents'
 	})
-	
+
 	.state('portal.incidents',{
 		templateUrl:'views/incidents/incident.feed.html',
 		controller:'incidentFeedController',
@@ -278,7 +279,7 @@ angular
           }
         }
 	})
-	
+
 	.state('portal.incidentDetail',{
 		templateUrl:'views/incidents/incident.feed.detail.html',
 		controller: 'incidentDetailCtrl',
@@ -292,7 +293,7 @@ angular
           }
         }
 	})
-	
+
 	.state('portal.advice',{
 		templateUrl:'views/advice/advice.html',
 		controller: 'adviceController',
@@ -306,7 +307,7 @@ angular
           }
         }
 	})
-	
+
 	.state('portal.map',{
 		templateUrl:'views/maps/map.html',
 		controller: 'incidentMapController',
@@ -320,7 +321,7 @@ angular
           }
         }
 	})
-	
+
 	.state('portal.notifications',{
 		templateUrl:'views/notifications/notifications.html',
 		controller: 'notificationsController',
@@ -334,8 +335,6 @@ angular
           }
         }
 	})
-   
-   
-  }]);
 
-    
+
+  }]);
