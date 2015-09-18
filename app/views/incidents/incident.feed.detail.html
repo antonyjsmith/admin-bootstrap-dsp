@@ -33,7 +33,7 @@
 			                <tr>
 			                    <td><b>Details</b></td>
 			                    <td ng-bind-html="incident.content | markdown"></td>
-			                </tr>	
+			                </tr>
                         </tbody>
                     </table>
                 </div>
@@ -42,7 +42,7 @@
         </div>
     </div>
     <!-- /.col-lg-6 -->
-    
+
     <div class="col-lg-6">
         <div class="panel panel-portal-green">
             <div class="panel-heading">
@@ -50,11 +50,7 @@
             </div>
             <div class="panel-body">
 	            <ui-gmap-google-map class="map-medium" center='map.center' zoom='map.zoom'>
-	            	<ui-gmap-marker
-				        idKey='incident.ID'
-				        coords='point'
-				        >
-					</ui-gmap-marker>
+	            	<ui-gmap-marker idKey='key' coords='point'></ui-gmap-marker>
 	            </ui-gmap-google-map>
             </div>
         </div>

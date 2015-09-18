@@ -9,11 +9,11 @@
 	            <div class="panel-body" ng-controller="incidentMapController">
 					<ui-gmap-google-map class="map-dash" center='map.center' zoom='map.zoom'>
 					<ui-gmap-markers models="markers" coords="'self'" events="markersEvents" icon="'icon'">
-					
+
 			            <ui-gmap-windows show="show">
 			                <div ng-non-bindable>{{title}}</div>
 			            </ui-gmap-windows>
-					
+
 					</ui-gmap-markers>
 				</ui-gmap-google-map>
 	            </div>
@@ -21,7 +21,7 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
-    
+
     <div class="row">
 	    <div class="col-lg-8">
 		    <div class="panel panel-portal-green" ng-controller="incidentFeedController">
@@ -40,7 +40,7 @@
 					<tbody>
 					    <tr ng-repeat="incident in incidents" ng-hide="$last">
 					        <td ng-bind-html="incident.post_title | markdown"></td>
-					        <td ng-bind-html="incident.post_date | markdown"></td>						        
+					        <td ng-bind-html="incident.post_date | markdown"></td>
 					        <td><a ng-href="#/portal/incident/feed/{{incident.ID}}">Go</a></td>
 					    </tr>
 					</tbody>
@@ -65,7 +65,7 @@
 					<tbody>
 					    <tr ng-repeat="update in updates.record">
 					        <td ng-bind-html="update.countryName | markdown"></td>
-					        <td ng-bind-html="update.lastEdit | markdown"></td>						        
+					        <td ng-bind-html="update.lastEdit | markdown"></td>
 					        <td><a ng-href="#/portal/countries/overview/{{update.countryID}}">Go</a></td>
 					    </tr>
 					</tbody>
@@ -73,6 +73,6 @@
 		    </div>
 		</div>
     </div>
-    
+
     <!-- /.panel -->
 </div>
